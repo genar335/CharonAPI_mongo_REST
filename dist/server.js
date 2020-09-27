@@ -34,10 +34,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
+const UserController = __importStar(require("./resolvers/user-actions"));
+const body_parser_1 = __importDefault(require("body-parser"));
+const express_session_1 = __importDefault(require("express-session"));
+const redis_1 = __importDefault(require("redis"));
+const connect_redis_1 = __importDefault(require("connect-redis"));
+const cors_1 = __importDefault(require("cors"));
 dotenv.config({});
 const PORT = 4000;
-const app = express_1.default();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    const app = express_1.default();
+    const RedisStore = connect_redis_1.default(express_session_1.default);
+    const redisClient = redis_1.default.createClient();
+    app.use(body_parser_1.default.json());
+    app.use(cors_1.default({
+        origin: "http://localhost:3000",
+        credentials: true,
+    }));
+    app.use(express_session_1.default({
+        name: "qid",
+        store: new RedisStore({
+            client: redisClient,
+            disableTouch: true,
+            disableTTL: true,
+        }),
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24 * 365,
+            httpOnly: true,
+            secure: true,
+            sameSite: "lax",
+        },
+        secret: "fhjdskalfhdsjklafhfhguirjewhjkgwjkf",
+        resave: false,
+        saveUninitialized: false,
+    }));
     try {
         mongoose_1.default.connect(process.env.DB_HOST, {
             useNewUrlParser: true,
@@ -47,9 +77,12 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         console.error(error);
     }
+    mongoose_1.default.set("debug", true);
     app.get("/", (res) => {
         res.send("Hello there, general Kenobi🦾");
     });
+    app.post("/users/create", UserController.createUser);
+    app.post("/users/log_in", UserController.login);
     app.listen(PORT, () => {
         console.log(`Server started on port: ${PORT}`);
     });
