@@ -1,0 +1,25 @@
+{
+  "name": "CharonAPI_Mongo_REST",
+  "version": "1.0.0",
+  "description": "Test creation and managment API",
+  "main": "server.js",
+  "author": "itlemonade",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn nodemon ./dist/server.js"
+  },
+  "dependencies": {
+    "cryptr": "^6.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.10.7"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.8",
+    "@types/mongoose": "^5.7.36",
+    "nodemon": "^2.0.4"
+  }
+}
