@@ -44,8 +44,21 @@ dotenv.config({});
 const PORT = 4000;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
+    try {
+        mongoose_1.default.connect(process.env.DB_HOST, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+    }
+    catch (error) {
+        console.error(error);
+    }
+    mongoose_1.default.set("debug", true);
     const RedisStore = connect_redis_1.default(express_session_1.default);
     const redisClient = redis_1.default.createClient();
+    redisClient.on("error", (err) => {
+        console.log("Redis error: ", err);
+    });
     app.use(body_parser_1.default.json());
     app.use(cors_1.default({
         origin: "http://localhost:3000",
@@ -57,29 +70,22 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             client: redisClient,
             disableTouch: true,
             disableTTL: true,
+            host: "localhost",
+            port: 6379,
+            ttl: 86400,
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365,
             httpOnly: true,
-            secure: true,
+            secure: false,
             sameSite: "lax",
         },
         secret: "fhjdskalfhdsjklafhfhguirjewhjkgwjkf",
         resave: false,
         saveUninitialized: false,
     }));
-    try {
-        mongoose_1.default.connect(process.env.DB_HOST, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-    }
-    catch (error) {
-        console.error(error);
-    }
-    mongoose_1.default.set("debug", true);
     app.get("/", (res) => {
-        res.send("Hello there, general Kenobi🦾");
+        res.send("Hello there; General Kenobi🦾");
     });
     app.post("/users/create", UserController.createUser);
     app.post("/users/log_in", UserController.login);

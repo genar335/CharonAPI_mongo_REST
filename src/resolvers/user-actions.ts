@@ -8,6 +8,11 @@ type User = {
   password: string;
 };
 
+/**
+ * Creates a new user.
+ * @param req incoming request from the TMS.
+ * @param res - info regarding the operation state.
+ */
 export const createUser = async (
   req: Request,
   res: Response
@@ -24,26 +29,32 @@ export const createUser = async (
   res.send(newUser);
 };
 
+/**
+ * Logs the user in and checks whether the user has logged in before, as well as sets a cookie.
+ * @param req - incoming request from the TMS.
+ * @param res - info regarding the operation state.
+ */
 export const login = async (req: Request, res: Response): Promise<void> => {
-  console.log(req.session!.userID);
-  const user = User.findOne(
-    {
-      name: req.body.name,
-    },
-    async (err: any, result: IUser) => {
-      if (err) {
-        res.send(err);
-      } else {
-        const match = await bcrypt.compare(req.body.password, result.password);
-        if (match) {
-          console.log("Yaaay!");
-          req.session!.userID = result.id;
-          res.send("Correct");
-        } else {
-          res.send("Incorrect password");
-        }
-      }
+  //* Checking whether the user has already logged in
+  if (req.session!.userID) {
+    res.send("Already logged in!");
+  } else {
+    const { name, password } = req.body;
+    if ((name || password) < 0) {
+      res.send("Error");
     }
-  );
-  console.log(user);
+    //* Finding user
+    const user: IUser | null = await User.findOne({ name: name });
+    if (user !== null) {
+      if (await bcrypt.compare(password, user.password)) {
+        //* Setting a cookei with the user id
+        req.session!.userID = user._id;
+        res.send(user);
+      } else {
+        res.send("Wrong password");
+      }
+    } else {
+      res.send("Wrong username");
+    }
+  }
 };

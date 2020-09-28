@@ -26,25 +26,27 @@ exports.createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.send(newUser);
 });
 exports.login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.session.userID);
-    const user = user_1.default.findOne({
-        name: req.body.name,
-    }, (err, result) => __awaiter(void 0, void 0, void 0, function* () {
-        if (err) {
-            res.send(err);
+    if (req.session.userID) {
+        res.send("Already logged in!");
+    }
+    else {
+        const { name, password } = req.body;
+        if ((name || password) < 0) {
+            res.send("Error");
         }
-        else {
-            const match = yield bcrypt_1.default.compare(req.body.password, result.password);
-            if (match) {
-                console.log("Yaaay!");
-                req.session.userID = result.id;
-                res.send("Correct");
+        const user = yield user_1.default.findOne({ name: name });
+        if (user !== null) {
+            if (yield bcrypt_1.default.compare(password, user.password)) {
+                req.session.userID = user._id;
+                res.send(user);
             }
             else {
-                res.send("Incorrect password");
+                res.send("Wrong password");
             }
         }
-    }));
-    console.log(user);
+        else {
+            res.send("Wrong username");
+        }
+    }
 });
 //# sourceMappingURL=user-actions.js.map

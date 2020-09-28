@@ -15,8 +15,22 @@ const PORT = 4000;
 
 const main = async () => {
   const app = express();
+  try {
+    mongoose.connect(process.env.DB_HOST as string, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  mongoose.set("debug", true);
   const RedisStore = connectRedis(session);
   const redisClient = redis.createClient();
+
+  redisClient.on("error", (err) => {
+    console.log("Redis error: ", err);
+  });
+
   app.use(bodyParser.json());
   app.use(
     cors({
@@ -32,11 +46,14 @@ const main = async () => {
         client: redisClient,
         disableTouch: true,
         disableTTL: true,
+        host: "localhost",
+        port: 6379,
+        ttl: 86400,
       }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365,
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: "lax",
       },
       secret: "fhjdskalfhdsjklafhfhguirjewhjkgwjkf",
@@ -44,19 +61,10 @@ const main = async () => {
       saveUninitialized: false,
     })
   );
-  try {
-    mongoose.connect(process.env.DB_HOST as string, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-  } catch (error) {
-    console.error(error);
-  }
-  mongoose.set("debug", true);
 
   //* Routes configuration
   app.get("/", (res: express.Response) => {
-    res.send("Hello there, general Kenobi🦾");
+    res.send("Hello there; General Kenobi🦾");
   });
   app.post("/users/create", UserController.createUser);
   app.post("/users/log_in", UserController.login);
