@@ -35,6 +35,7 @@ const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
 const UserController = __importStar(require("./resolvers/user-actions"));
+const TestController = __importStar(require("./resolvers/test-actions"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_session_1 = __importDefault(require("express-session"));
 const redis_1 = __importDefault(require("redis"));
@@ -89,6 +90,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     });
     app.post("/users/create", UserController.createUser);
     app.post("/users/log_in", UserController.login);
+    app.post("/tests/create", TestController.createTest);
     app.listen(PORT, () => {
         console.log(`Server started on port: ${PORT}`);
     });

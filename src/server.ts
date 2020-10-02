@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import * as UserController from "./resolvers/user-actions";
+import * as TestController from "./resolvers/test-actions";
 import bodyParser from "body-parser";
 import session from "express-session";
 import redis from "redis";
@@ -68,6 +69,8 @@ const main = async () => {
   });
   app.post("/users/create", UserController.createUser);
   app.post("/users/log_in", UserController.login);
+
+  app.post("/tests/create", TestController.createTest);
 
   app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
