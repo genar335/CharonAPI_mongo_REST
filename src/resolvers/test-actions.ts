@@ -8,28 +8,15 @@ export const createTest = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  console.log(req.body);
+  //console.log(req.body);
 
-  const newTest = new Test({
-    _id: new Types.ObjectId(),
-    ru: [
-      {
-        name: req.body.ru.name,
-      },
-    ],
-    lv: [
-      {
-        name: req.body.lv.name,
-      },
-    ],
-    en: [
-      {
-        name: req.body.lv.name,
-      },
-    ],
+  const { ru, lv, en } = req.body;
+
+  const enPages = en.pages;
+  //console.log(enPages);
+  enPages.forEach((element: any) => {
+    // console.log(element);
+    console.log(typeof element);
   });
-
-  console.log(newTest);
-
-  res.send(newTest);
+  res.send(req.body);
 };

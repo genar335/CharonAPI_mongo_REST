@@ -8,34 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createTest = void 0;
-const Test_1 = __importDefault(require("../entities/Test"));
-const mongoose_1 = require("mongoose");
 exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
-    const newTest = new Test_1.default({
-        _id: new mongoose_1.Types.ObjectId(),
-        ru: [
-            {
-                name: req.body.ru.name,
-            },
-        ],
-        lv: [
-            {
-                name: req.body.lv.name,
-            },
-        ],
-        en: [
-            {
-                name: req.body.lv.name,
-            },
-        ],
+    const { ru, lv, en } = req.body;
+    const enPages = en.pages;
+    enPages.forEach((element) => {
+        console.log(typeof element);
     });
-    console.log(newTest);
-    res.send(newTest);
+    res.send(req.body);
 });
 //# sourceMappingURL=test-actions.js.map
