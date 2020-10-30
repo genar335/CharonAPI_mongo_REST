@@ -1,4 +1,5 @@
 import express from "express";
+import socket from "socket.io";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import * as UserController from "./resolvers/user-actions";
@@ -72,8 +73,17 @@ const main = async () => {
 
   app.post("/tests/create", TestController.createTest);
 
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
+  });
+
+  const io = socket(server);
+
+  io.on("connection", (socket) => {
+    console.log("socket connected");
+    socket.on("Pages update", (msg) => console.log(msg));
+    socket.on("Test changed", (data) => console.log(data));
+    socket.on("disconnect", () => console.log("User disconnected"));
   });
 };
 

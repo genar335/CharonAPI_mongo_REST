@@ -32,6 +32,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const socket_io_1 = __importDefault(require("socket.io"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
 const UserController = __importStar(require("./resolvers/user-actions"));
@@ -91,8 +92,15 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.post("/users/create", UserController.createUser);
     app.post("/users/log_in", UserController.login);
     app.post("/tests/create", TestController.createTest);
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
         console.log(`Server started on port: ${PORT}`);
+    });
+    const io = socket_io_1.default(server);
+    io.on("connection", (socket) => {
+        console.log("socket connected");
+        socket.on("Pages update", (msg) => console.log(msg));
+        socket.on("Test changed", (data) => console.log(data));
+        socket.on("disconnect", () => console.log("User disconnected"));
     });
 });
 main();
