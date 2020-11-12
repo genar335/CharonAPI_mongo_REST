@@ -9,6 +9,8 @@ import session from "express-session";
 import redis from "redis";
 import connectRedis from "connect-redis";
 import cors from "cors";
+import Test, { ITest } from "./entities/Test";
+import fileUpload from "express-fileupload";
 
 dotenv.config({
   //   path: "../.env",
@@ -33,13 +35,16 @@ const main = async () => {
     console.log("Redis error: ", err);
   });
 
-  app.use(bodyParser.json());
+  app.use(express.json({ limit: "50mb" }));
+  app.use(express.urlencoded({ limit: "50mb" }));
   app.use(
     cors({
       origin: "http://localhost:3000",
       credentials: true,
     })
   );
+
+  app.use(fileUpload());
 
   app.use(
     session({
@@ -72,6 +77,7 @@ const main = async () => {
   app.post("/users/log_in", UserController.login);
 
   app.post("/tests/create", TestController.createTest);
+  app.post("/tests/testIMG", TestController.imgTest);
 
   const server = app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
@@ -82,7 +88,7 @@ const main = async () => {
   io.on("connection", (socket) => {
     console.log("socket connected");
     socket.on("Pages update", (msg) => console.log(msg));
-    socket.on("Test changed", (data) => console.log(data));
+    socket.on("Test changed", (data: ITest) => console.log(data.ru));
     socket.on("disconnect", () => console.log("User disconnected"));
   });
 };

@@ -37,11 +37,11 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
 const UserController = __importStar(require("./resolvers/user-actions"));
 const TestController = __importStar(require("./resolvers/test-actions"));
-const body_parser_1 = __importDefault(require("body-parser"));
 const express_session_1 = __importDefault(require("express-session"));
 const redis_1 = __importDefault(require("redis"));
 const connect_redis_1 = __importDefault(require("connect-redis"));
 const cors_1 = __importDefault(require("cors"));
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 dotenv.config({});
 const PORT = 4000;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -61,11 +61,13 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     redisClient.on("error", (err) => {
         console.log("Redis error: ", err);
     });
-    app.use(body_parser_1.default.json());
+    app.use(express_1.default.json({ limit: "50mb" }));
+    app.use(express_1.default.urlencoded({ limit: "50mb" }));
     app.use(cors_1.default({
         origin: "http://localhost:3000",
         credentials: true,
     }));
+    app.use(express_fileupload_1.default());
     app.use(express_session_1.default({
         name: "qid",
         store: new RedisStore({
@@ -92,6 +94,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.post("/users/create", UserController.createUser);
     app.post("/users/log_in", UserController.login);
     app.post("/tests/create", TestController.createTest);
+    app.post("/tests/testIMG", TestController.imgTest);
     const server = app.listen(PORT, () => {
         console.log(`Server started on port: ${PORT}`);
     });
@@ -99,7 +102,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     io.on("connection", (socket) => {
         console.log("socket connected");
         socket.on("Pages update", (msg) => console.log(msg));
-        socket.on("Test changed", (data) => console.log(data));
+        socket.on("Test changed", (data) => console.log(data.ru));
         socket.on("disconnect", () => console.log("User disconnected"));
     });
 });

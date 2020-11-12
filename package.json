@@ -9,6 +9,7 @@
     "dev": "yarn nodemon ./dist/server.js"
   },
   "dependencies": {
+    "@types/express-fileupload": "^1.1.5",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "connect-redis": "^5.0.0",
@@ -16,7 +17,9 @@
     "cryptr": "^6.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
     "express-session": "^1.17.1",
+    "filereader": "^0.10.3",
     "mongoose": "^5.10.7",
     "redis": "^3.0.2",
     "socket.io": "^2.3.0"
