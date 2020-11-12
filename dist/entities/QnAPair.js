@@ -23,11 +23,11 @@ exports.QnAPairSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 exports.QnAPairSchema = new mongoose_1.default.Schema({
     question: {
-        type: Object,
+        type: String,
         required: true,
     },
     answer: {
-        type: Object,
+        type: String,
         required: true,
     },
     belongsTo: {

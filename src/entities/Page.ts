@@ -1,27 +1,33 @@
 import mongoose, { model, Schema, Types } from "mongoose";
-import { TQnA } from "./QnAPair";
+import { IQnAPair, TQnA } from "./QnAPair";
 
 export interface IPage extends mongoose.Document {
   QuestionAnswerPairs: [
     {
-      QnAPair: TQnA;
-      //   ref: string;
+      question: string;
+      answer: string;
+      // QnAPair: IQnAPair;
+      // //   ref: string;
     }
   ];
 }
 
 export const PageSchema = new mongoose.Schema({
-  QuestionAnswerPairs: [
+  QnAPairs: [
+    // {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "QnAPair",
+    //   required: true,
+    // },
     {
-      type: Schema.Types.ObjectId,
-      ref: "QnAPair",
-      required: true,
+      question: String,
+      answer: String,
     },
   ],
-  belongsTo: {
-    type: Types.ObjectId,
-    ref: "Test",
-  },
+  // belongsTo: {
+  //   type: Types.ObjectId,
+  //   ref: "Test",
+  // },
 });
 
 const Page = model<IPage>("Page", PageSchema);

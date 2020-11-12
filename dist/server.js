@@ -94,17 +94,11 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.post("/users/create", UserController.createUser);
     app.post("/users/log_in", UserController.login);
     app.post("/tests/create", TestController.createTest);
-    app.post("/tests/testIMG", TestController.imgTest);
+    app.post("/tests/testIMG", TestController.imgSaving);
     const server = app.listen(PORT, () => {
         console.log(`Server started on port: ${PORT}`);
     });
     const io = socket_io_1.default(server);
-    io.on("connection", (socket) => {
-        console.log("socket connected");
-        socket.on("Pages update", (msg) => console.log(msg));
-        socket.on("Test changed", (data) => console.log(data.ru));
-        socket.on("disconnect", () => console.log("User disconnected"));
-    });
 });
 main();
 //# sourceMappingURL=server.js.map

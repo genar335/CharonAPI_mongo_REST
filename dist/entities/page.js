@@ -22,17 +22,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PageSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 exports.PageSchema = new mongoose_1.default.Schema({
-    QuestionAnswerPairs: [
+    QnAPairs: [
         {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "QnAPair",
-            required: true,
+            question: String,
+            answer: String,
         },
     ],
-    belongsTo: {
-        type: mongoose_1.Types.ObjectId,
-        ref: "Test",
-    },
 });
 const Page = mongoose_1.model("Page", exports.PageSchema);
 exports.default = Page;

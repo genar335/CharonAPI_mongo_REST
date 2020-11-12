@@ -1,73 +1,84 @@
 import { Document, model, Schema, Types } from "mongoose";
-import { IPage } from "./Page";
+import { IPage, PageSchema } from "./Page";
+import QnAPair from "./QnAPair";
 
-export interface ITest extends Document {
-  ru: [
+export interface IPageV2 {
+  QnAPairs: [
     {
-      name: string;
-      mainQusetion: string;
-      emailSender: Boolean;
-      pages: Array<IPage>;
-    }
-  ];
-  lv: [
-    {
-      name: string;
-      mainQusetion: string;
-      emailSender: Boolean;
-      pages: Array<IPage>;
-    }
-  ];
-  en: [
-    {
-      name: string;
-      mainQusetion: string;
-      emailSender: Boolean;
-      pages: Array<IPage>;
+      question: string;
+      answer: string;
     }
   ];
 }
+export interface ITest extends Document {
+  ru: {
+    name: string;
+    mainQusetion: string;
+    emailSender: Boolean;
+    pages: Array<IPageV2>;
+  };
+  lv: {
+    name: string;
+    mainQusetion: string;
+    emailSender: Boolean;
+    pages: Array<IPageV2>;
+  };
+  en: {
+    name: string;
+    mainQusetion: string;
+    emailSender: Boolean;
+    pages: Array<IPageV2>;
+  };
+}
 
 export const TestSchema = new Schema({
-  ru: [
-    {
-      name: String,
-      mainQuesiton: String,
-      emailSender: Boolean,
-      pages: [
-        {
-          type: Types.ObjectId,
-          ref: "Page",
-        },
-      ],
-    },
-  ],
-  lv: [
-    {
-      name: String,
-      mainQuesiton: String,
-      emailSender: Boolean,
-      pages: [
-        {
-          type: Types.ObjectId,
-          ref: "Page",
-        },
-      ],
-    },
-  ],
-  en: [
-    {
-      name: String,
-      mainQuesiton: String,
-      emailSender: Boolean,
-      pages: [
-        {
-          type: Types.ObjectId,
-          ref: "Page",
-        },
-      ],
-    },
-  ],
+  ru: {
+    name: String,
+    mainQuesiton: String,
+    emailSender: Boolean,
+    pages: [
+      {
+        QnAPairs: [
+          {
+            question: String,
+            answer: String,
+          },
+        ],
+      },
+    ],
+  },
+
+  lv: {
+    name: String,
+    mainQuesiton: String,
+    emailSender: Boolean,
+    pages: [
+      {
+        QnAPairs: [
+          {
+            question: String,
+            answer: String,
+          },
+        ],
+      },
+    ],
+  },
+
+  en: {
+    name: String,
+    mainQuesiton: String,
+    emailSender: Boolean,
+    pages: [
+      {
+        QnAPairs: [
+          {
+            question: String,
+            answer: String,
+          },
+        ],
+      },
+    ],
+  },
 });
 
 const Test = model<ITest>("Test", TestSchema);

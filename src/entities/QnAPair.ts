@@ -1,28 +1,28 @@
 import mongoose, { Schema } from "mongoose";
 
-export type TQnA = {
-  quesiton: {
-    imgURL?: string;
-    text?: string;
-  };
-  answer: {
-    imgURL?: string;
-    text?: string;
-  };
-};
+// export type TQnA = {
+//   quesiton: {
+//     imgURL?: string;
+//     text?: string;
+//   };
+//   answer: {
+//     imgURL?: string;
+//     text?: string;
+//   };
+// };
 
 export interface IQnAPair extends mongoose.Document {
-  question: TQnA;
-  answer: TQnA;
+  question: string;
+  answer: string;
 }
 
 export const QnAPairSchema = new mongoose.Schema({
   question: {
-    type: Object,
+    type: String,
     required: true,
   },
   answer: {
-    type: Object,
+    type: String,
     required: true,
   },
   belongsTo: {

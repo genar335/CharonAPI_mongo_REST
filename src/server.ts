@@ -77,7 +77,7 @@ const main = async () => {
   app.post("/users/log_in", UserController.login);
 
   app.post("/tests/create", TestController.createTest);
-  app.post("/tests/testIMG", TestController.imgTest);
+  app.post("/tests/testIMG", TestController.imgSaving);
 
   const server = app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
@@ -85,12 +85,12 @@ const main = async () => {
 
   const io = socket(server);
 
-  io.on("connection", (socket) => {
-    console.log("socket connected");
-    socket.on("Pages update", (msg) => console.log(msg));
-    socket.on("Test changed", (data: ITest) => console.log(data.ru));
-    socket.on("disconnect", () => console.log("User disconnected"));
-  });
+  // io.on("connection", (socket) => {
+  //   console.log("socket connected");
+  //   socket.on("Pages update", (msg) => console.log(msg));
+  //   socket.on("Test changed", (data: ITest) => console.log(data.ru));
+  //   socket.on("disconnect", () => console.log("User disconnected"));
+  // });
 };
 
 main();
