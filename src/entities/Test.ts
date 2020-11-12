@@ -1,6 +1,6 @@
-import { Document, model, Schema, Types } from "mongoose";
-import { IPage, PageSchema } from "./Page";
-import QnAPair from "./QnAPair";
+import { Document, model, Schema } from "mongoose";
+// import { IPage, PageSchema } from "./Page";
+// import QnAPair from "./QnAPair";
 
 export interface IPageV2 {
   QnAPairs: [

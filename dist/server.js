@@ -31,8 +31,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PORT = void 0;
 const express_1 = __importDefault(require("express"));
-const socket_io_1 = __importDefault(require("socket.io"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
 const UserController = __importStar(require("./resolvers/user-actions"));
@@ -43,7 +43,7 @@ const connect_redis_1 = __importDefault(require("connect-redis"));
 const cors_1 = __importDefault(require("cors"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 dotenv.config({});
-const PORT = 4000;
+exports.PORT = 4000;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     try {
@@ -68,6 +68,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         credentials: true,
     }));
     app.use(express_fileupload_1.default());
+    app.use("/uploads", express_1.default.static(__dirname + "/uploads"));
     app.use(express_session_1.default({
         name: "qid",
         store: new RedisStore({
@@ -88,17 +89,16 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         resave: false,
         saveUninitialized: false,
     }));
-    app.get("/", (res) => {
+    app.get("/", (req, res) => {
         res.send("Hello there; General Kenobi🦾");
     });
     app.post("/users/create", UserController.createUser);
     app.post("/users/log_in", UserController.login);
     app.post("/tests/create", TestController.createTest);
     app.post("/tests/testIMG", TestController.imgSaving);
-    const server = app.listen(PORT, () => {
-        console.log(`Server started on port: ${PORT}`);
+    app.listen(exports.PORT, () => {
+        console.log(`Server started on port: ${exports.PORT}`);
     });
-    const io = socket_io_1.default(server);
 });
 main();
 //# sourceMappingURL=server.js.map

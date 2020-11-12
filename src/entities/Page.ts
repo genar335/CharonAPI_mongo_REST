@@ -1,5 +1,5 @@
-import mongoose, { model, Schema, Types } from "mongoose";
-import { IQnAPair, TQnA } from "./QnAPair";
+import mongoose, { model /* , Schema, Types */ } from "mongoose";
+// import { IQnAPair, TQnA } from "./QnAPair";
 
 export interface IPage extends mongoose.Document {
   QuestionAnswerPairs: [

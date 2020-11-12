@@ -1,21 +1,22 @@
 import express from "express";
-import socket from "socket.io";
+// import socket from "socket.io";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import * as UserController from "./resolvers/user-actions";
 import * as TestController from "./resolvers/test-actions";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import session from "express-session";
 import redis from "redis";
 import connectRedis from "connect-redis";
 import cors from "cors";
-import Test, { ITest } from "./entities/Test";
+// import Test, { ITest } from "./entities/Test";
 import fileUpload from "express-fileupload";
+import fs from "fs";
 
 dotenv.config({
   //   path: "../.env",
 });
-const PORT = 4000;
+export const PORT = 4000;
 
 const main = async () => {
   const app = express();
@@ -45,6 +46,7 @@ const main = async () => {
   );
 
   app.use(fileUpload());
+  app.use("/uploads", express.static(__dirname + "/uploads"));
 
   app.use(
     session({
@@ -70,20 +72,21 @@ const main = async () => {
   );
 
   //* Routes configuration
-  app.get("/", (res: express.Response) => {
+  app.get("/", (req: express.Request, res: express.Response) => {
     res.send("Hello there; General Kenobi🦾");
   });
+
   app.post("/users/create", UserController.createUser);
   app.post("/users/log_in", UserController.login);
 
   app.post("/tests/create", TestController.createTest);
   app.post("/tests/testIMG", TestController.imgSaving);
 
-  const server = app.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
   });
 
-  const io = socket(server);
+  // const io = socket(server);
 
   // io.on("connection", (socket) => {
   //   console.log("socket connected");

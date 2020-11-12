@@ -13,18 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.imgSaving = exports.createTest = void 0;
-const QnAPair_1 = __importDefault(require("../entities/QnAPair"));
 const Test_1 = __importDefault(require("../entities/Test"));
 const fs_1 = __importDefault(require("fs"));
-const regex = /^data:.+\/(.+);base64,(.*)$/;
+const server_1 = require("../server");
 exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     try {
         const test = yield Test_1.default.create(req.body);
-        const tmp = yield QnAPair_1.default.create({
-            answer: "123",
-            question: "qq",
-        });
         const tmpTest = yield Test_1.default.create({
             ru: {
                 name: "123",
@@ -59,6 +54,7 @@ exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             },
         });
         console.log(tmpTest);
+        console.log(test);
     }
     catch (error) {
         console.log(error);
@@ -66,17 +62,24 @@ exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.send("Recieved a test!");
 });
 exports.imgSaving = (req, res) => {
+    console.log("recieved the img");
     if (req.body) {
+        let imgsLocation = [];
         req.body.forEach((file, index) => {
-            let matches = file.match(regex);
-            let ext = matches[1];
-            let data = matches[2];
+            console.log("hello from the loop");
+            console.log(file.length);
+            console.log(file.slice(file.indexOf("/") + 1, file.indexOf(";")));
+            let ext = file.slice(file.indexOf("/") + 1, file.indexOf(";"));
+            let data = file.split(",")[1];
             let buffer = Buffer.from(data, "base64");
-            fs_1.default.writeFileSync(`./uploads/img_${index}.` + ext, buffer);
-            console.log(console.log(buffer));
+            console.log("starting to read the file");
+            fs_1.default.writeFileSync(`dist/uploads/img_${index}.${ext}`, buffer);
+            console.log(buffer);
+            imgsLocation.push(`http://localhost:${server_1.PORT}/uploads/img_${index}.` + ext);
         });
         console.log("Done parsing the images");
-        res.send("Success, images have been saved");
+        res.send(imgsLocation);
     }
+    console.log("finish");
 };
 //# sourceMappingURL=test-actions.js.map
