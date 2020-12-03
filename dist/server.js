@@ -89,13 +89,15 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         resave: false,
         saveUninitialized: false,
     }));
-    app.get("/", (req, res) => {
-        res.send("Hello there; General Kenobi🦾");
-    });
     app.post("/users/create", UserController.createUser);
     app.post("/users/log_in", UserController.login);
     app.post("/tests/create", TestController.createTest);
     app.post("/tests/testIMG", TestController.imgSaving);
+    app.post("/tests/toggleTestActiveState", TestController.toggleTestActiveState);
+    app.get("/tests/getTest", TestController.getTestsByActiveParam);
+    app.get("/tests/getTestByID", TestController.getTestByID);
+    app.get("/tests/allTests", TestController.getAllTests);
+    app.get("/tests/deleteTestByID", TestController.deleteTestByID);
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });

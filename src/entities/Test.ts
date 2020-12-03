@@ -29,6 +29,9 @@ export interface ITest extends Document {
     emailSender: Boolean;
     pages: Array<IPageV2>;
   };
+  pages: number;
+  type: "TT" | "TP" | "PP";
+  active: boolean;
 }
 
 export const TestSchema = new Schema({
@@ -79,6 +82,9 @@ export const TestSchema = new Schema({
       },
     ],
   },
+  type: String,
+  pages: Number,
+  active: Boolean,
 });
 
 const Test = model<ITest>("Test", TestSchema);

@@ -48,6 +48,9 @@ exports.TestSchema = new mongoose_1.Schema({
             },
         ],
     },
+    type: String,
+    pages: Number,
+    active: Boolean,
 });
 const Test = mongoose_1.model("Test", exports.TestSchema);
 exports.default = Test;

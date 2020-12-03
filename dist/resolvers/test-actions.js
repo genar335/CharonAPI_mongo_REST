@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.imgSaving = exports.createTest = void 0;
+exports.deleteTestByID = exports.getTestByID = exports.toggleTestActiveState = exports.getAllTests = exports.imgSaving = exports.getTestsByActiveParam = exports.createTest = void 0;
 const Test_1 = __importDefault(require("../entities/Test"));
 const fs_1 = __importDefault(require("fs"));
 const server_1 = require("../server");
@@ -20,40 +20,6 @@ exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     console.log(req.body);
     try {
         const test = yield Test_1.default.create(req.body);
-        const tmpTest = yield Test_1.default.create({
-            ru: {
-                name: "123",
-                pages: [],
-                emailSender: false,
-                mainQusetion: "?",
-            },
-            lv: {
-                name: "456",
-                pages: [
-                    {
-                        QnAPairs: [
-                            {
-                                question: "lvq",
-                                answer: "lva",
-                            },
-                            {
-                                question: "lvq1",
-                                answer: "lva1",
-                            },
-                        ],
-                    },
-                ],
-                emailSender: false,
-                mainQusetion: "??",
-            },
-            en: {
-                name: "789",
-                pages: [],
-                emailSender: false,
-                mainQusetion: "???",
-            },
-        });
-        console.log(tmpTest);
         console.log(test);
     }
     catch (error) {
@@ -61,14 +27,26 @@ exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     res.send("Recieved a test!");
 });
+exports.getTestsByActiveParam = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.query);
+    if (req.query.active) {
+        Test_1.default.find({
+            active: req.query.active,
+        }, (err, result) => {
+            if (err) {
+                res.send(`Error has occured: err`);
+            }
+            else {
+                res.send(result);
+            }
+        });
+    }
+});
 exports.imgSaving = (req, res) => {
     console.log("recieved the img");
     if (req.body) {
         let imgsLocation = [];
         req.body.forEach((file, index) => {
-            console.log("hello from the loop");
-            console.log(file.length);
-            console.log(file.slice(file.indexOf("/") + 1, file.indexOf(";")));
             let ext = file.slice(file.indexOf("/") + 1, file.indexOf(";"));
             let data = file.split(",")[1];
             let buffer = Buffer.from(data, "base64");
@@ -82,4 +60,52 @@ exports.imgSaving = (req, res) => {
     }
     console.log("finish");
 };
+exports.getAllTests = (req, res) => {
+    Test_1.default.find((err, result) => {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            console.log("success");
+            res.send(result);
+        }
+    });
+};
+exports.toggleTestActiveState = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { testID, isActive } = req.body;
+    console.log(testID, isActive);
+    const changedTest = yield Test_1.default.findOneAndUpdate({ _id: testID }, {
+        active: isActive,
+    }, { new: true });
+    console.log(changedTest);
+    res.send(changedTest);
+});
+exports.getTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.query, "hello");
+    if (req.query.testToEdit !== undefined) {
+        try {
+            const testToEditFromDB = yield Test_1.default.findById(req.query.testToEdit);
+            console.log(testToEditFromDB);
+            res.send(testToEditFromDB);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+    else {
+        res.status(400).send("Sorry, no correct ID was supplied");
+    }
+});
+exports.deleteTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.query.testToDelete) {
+        try {
+            const deletedTest = yield Test_1.default.findByIdAndDelete(req.query.testToDelete);
+            res.send(deletedTest);
+        }
+        catch (error) {
+            console.log(error);
+            res.send("Error has occured");
+        }
+    }
+});
 //# sourceMappingURL=test-actions.js.map
