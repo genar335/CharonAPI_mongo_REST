@@ -17,15 +17,48 @@ const Test_1 = __importDefault(require("../entities/Test"));
 const fs_1 = __importDefault(require("fs"));
 const server_1 = require("../server");
 exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
-    try {
-        const test = yield Test_1.default.create(req.body);
-        console.log(test);
+    const arrivedData = req.body;
+    if (!arrivedData._id) {
+        try {
+            if (arrivedData.type !== "TT") {
+                for (let property in arrivedData) {
+                    if (property === "ru" || property === "lv" || property === "en") {
+                        arrivedData[property].pages.forEach((page, pageIndex) => {
+                            page.QnAPairs.forEach((qORa, index) => {
+                                if (/data:image/.test(qORa.question)) {
+                                    dataURICoversion(qORa, "question", index, pageIndex);
+                                }
+                                else if (/data:image/.test(qORa.answer)) {
+                                    dataURICoversion(qORa, "answer", index, pageIndex);
+                                }
+                            });
+                        });
+                    }
+                }
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+        try {
+            const test = yield Test_1.default.create(arrivedData);
+            res.send(test);
+        }
+        catch (error) {
+            console.log(error);
+            res.send(error);
+        }
     }
-    catch (error) {
-        console.log(error);
+    else {
+        Test_1.default.updateOne({
+            _id: req.body._id,
+        }, req.body, (err, result) => {
+            if (err) {
+                res.send(err);
+            }
+            res.send(result);
+        });
     }
-    res.send("Recieved a test!");
 });
 exports.getTestsByActiveParam = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.query);
@@ -108,4 +141,17 @@ exports.deleteTestByID = (req, res) => __awaiter(void 0, void 0, void 0, functio
         }
     }
 });
+function dataURICoversion(qORa, whatToChange, index, pageIndex) {
+    let tmp = qORa[whatToChange];
+    let ext = tmp.slice(tmp.indexOf("/") + 1, tmp.indexOf(";"));
+    if (ext.indexOf("+") !== -1) {
+        console.log("Found a plus", ext);
+        ext = ext.slice(0, ext.indexOf("+"));
+    }
+    let data = tmp.split(",")[1];
+    let buffer = Buffer.from(data, "base64");
+    console.log(buffer);
+    fs_1.default.writeFileSync(`dist/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`, buffer);
+    qORa[whatToChange] = `http://localhost:${server_1.PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
+}
 //# sourceMappingURL=test-actions.js.map

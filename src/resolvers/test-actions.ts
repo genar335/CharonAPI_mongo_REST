@@ -1,4 +1,4 @@
-import Test, { ITest } from "../entities/Test";
+import Test, { IPageV2, ITest } from "../entities/Test";
 
 import { Request, Response } from "express";
 import fs from "fs";
@@ -8,15 +8,82 @@ export const createTest = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  console.log(req.body);
-  try {
-    const test = await Test.create<ITest>(req.body);
+  // console.log(req.body);
+  const arrivedData: ITest = req.body;
+  if (!arrivedData._id) {
+    try {
+      if (arrivedData.type !== "TT") {
+        for (let property in arrivedData) {
+          // console.log(
+          //   arrivedData[
+          //     property as "ru" | "lv" | "en" | "pages" | "type" | "active"
+          //   ]
+          // );
+          if (property === "ru" || property === "lv" || property === "en") {
+            // console.log(property, "What a prop?");
+            arrivedData[property as "ru" | "lv" | "en"].pages.forEach(
+              (page: IPageV2, pageIndex) => {
+                // console.log(page, "Hey a first loop");
+                page.QnAPairs.forEach(
+                  (qORa: { question: string; answer: string }, index) => {
+                    // console.log(qORa, "Hello there");
+                    if (/data:image/.test(qORa.question)) {
+                      // console.log(qORa.question, "After regex match");
+                      dataURICoversion(qORa, "question", index, pageIndex);
+                    } else if (/data:image/.test(qORa.answer)) {
+                      // let tmp = qORa.answer;
+                      // let ext = tmp.slice(
+                      //   tmp.indexOf("/") + 1,
+                      //   tmp.indexOf(";")
+                      // );
+                      // if (ext.indexOf("+") !== -1) {
+                      //   ext = ext.slice(0, ext.indexOf("+"));
+                      // }
 
-    console.log(test);
-  } catch (error) {
-    console.log(error);
+                      // let data = tmp.split(",")[1];
+                      // let buffer = Buffer.from(data, "base64");
+                      // // console.log(buffer);
+                      // fs.writeFileSync(
+                      //   `dist/uploads/img_answer_pair-${index}_page-${pageIndex}.${ext}`,
+                      //   buffer
+                      // );
+                      // qORa.answer = `http://localhost:${PORT}/uploads/img_answer_pair-${index}_page-${pageIndex}.${ext}`;
+                      dataURICoversion(qORa, "answer", index, pageIndex);
+                    }
+                  }
+                );
+              }
+            );
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      const test = await Test.create<ITest>(arrivedData);
+
+      res.send(test);
+      // console.log(test);
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  } else {
+    Test.updateOne(
+      {
+        _id: req.body._id,
+      },
+      req.body,
+      (err: any, result: any) => {
+        if (err) {
+          res.send(err);
+        }
+        res.send(result);
+      }
+    );
+    // res.send("Duplicate test");
   }
-  res.send("Recieved a test!");
 };
 
 export const getTestsByActiveParam = async (req: Request, res: Response) => {
@@ -111,3 +178,26 @@ export const deleteTestByID = async (req: Request, res: Response) => {
     }
   }
 };
+function dataURICoversion(
+  qORa: { question: string; answer: string },
+  whatToChange: "question" | "answer",
+  index: number,
+  pageIndex: number
+) {
+  let tmp = qORa[whatToChange];
+  let ext = tmp.slice(tmp.indexOf("/") + 1, tmp.indexOf(";"));
+  if (ext.indexOf("+") !== -1) {
+    console.log("Found a plus", ext);
+    ext = ext.slice(0, ext.indexOf("+"));
+  }
+  let data = tmp.split(",")[1];
+  let buffer = Buffer.from(data, "base64");
+  console.log(buffer);
+  fs.writeFileSync(
+    `dist/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`,
+    buffer
+  );
+  qORa[
+    whatToChange
+  ] = `http://localhost:${PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
+}
