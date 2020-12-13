@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTestByID = exports.getTestByID = exports.toggleTestActiveState = exports.getAllTests = exports.imgSaving = exports.getTestsByActiveParam = exports.createTest = void 0;
+exports.deleteTestByID = exports.getTestByID = exports.toggleTestActiveState = exports.getAllTests = exports.imgSaving = exports.saveIMG = exports.getTestsByActiveParam = exports.createTest = void 0;
 const Test_1 = __importDefault(require("../entities/Test"));
 const fs_1 = __importDefault(require("fs"));
 const server_1 = require("../server");
@@ -75,6 +75,16 @@ exports.getTestsByActiveParam = (req, res) => __awaiter(void 0, void 0, void 0, 
         });
     }
 });
+exports.saveIMG = (req, res) => {
+    if (req.body) {
+        const { fileName, fileContents, } = req.body;
+        console.log(fileName, "fName");
+        let data = fileContents.split(",")[1];
+        let buffer = Buffer.from(data, "base64");
+        fs_1.default.writeFileSync(`dist/uploads/${fileName}`, buffer);
+        res.send(`http://localhost:${server_1.PORT}/uploads/${fileName}`);
+    }
+};
 exports.imgSaving = (req, res) => {
     console.log("recieved the img");
     if (req.body) {

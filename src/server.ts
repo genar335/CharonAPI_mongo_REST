@@ -1,5 +1,5 @@
 import express from "express";
-// import socket from "socket.io";
+import socket from "socket.io";
 import mongoose, { get } from "mongoose";
 import * as dotenv from "dotenv";
 import * as UserController from "./resolvers/user-actions";
@@ -88,11 +88,14 @@ const main = async () => {
   app.get("/tests/allTests", TestController.getAllTests);
   app.get("/tests/deleteTestByID", TestController.deleteTestByID);
 
+  app.post('/imgSaving', TestController.saveIMG)
+
   app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
   });
 
-  // const io = socket(server);
+  //? Not sure whether sockets are gonna be useful
+  // const io = require("socket.io")(4001);
 
   // io.on("connection", (socket) => {
   //   console.log("socket connected");

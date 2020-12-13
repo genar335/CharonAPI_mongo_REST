@@ -31,23 +31,6 @@ export const createTest = async (
                       // console.log(qORa.question, "After regex match");
                       dataURICoversion(qORa, "question", index, pageIndex);
                     } else if (/data:image/.test(qORa.answer)) {
-                      // let tmp = qORa.answer;
-                      // let ext = tmp.slice(
-                      //   tmp.indexOf("/") + 1,
-                      //   tmp.indexOf(";")
-                      // );
-                      // if (ext.indexOf("+") !== -1) {
-                      //   ext = ext.slice(0, ext.indexOf("+"));
-                      // }
-
-                      // let data = tmp.split(",")[1];
-                      // let buffer = Buffer.from(data, "base64");
-                      // // console.log(buffer);
-                      // fs.writeFileSync(
-                      //   `dist/uploads/img_answer_pair-${index}_page-${pageIndex}.${ext}`,
-                      //   buffer
-                      // );
-                      // qORa.answer = `http://localhost:${PORT}/uploads/img_answer_pair-${index}_page-${pageIndex}.${ext}`;
                       dataURICoversion(qORa, "answer", index, pageIndex);
                     }
                   }
@@ -101,6 +84,21 @@ export const getTestsByActiveParam = async (req: Request, res: Response) => {
         }
       }
     );
+  }
+};
+
+export const saveIMG = (req: Request, res: Response) => {
+  // console.log(req.body);
+  if (req.body) {
+    const {
+      fileName,
+      fileContents,
+    }: { fileName: string; fileContents: string } = req.body;
+    console.log(fileName, "fName");
+    let data = fileContents.split(",")[1];
+    let buffer = Buffer.from(data, "base64");
+    fs.writeFileSync(`dist/uploads/${fileName}`, buffer);
+    res.send(`http://localhost:${PORT}/uploads/${fileName}`);
   }
 };
 

@@ -98,6 +98,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get("/tests/getTestByID", TestController.getTestByID);
     app.get("/tests/allTests", TestController.getAllTests);
     app.get("/tests/deleteTestByID", TestController.deleteTestByID);
+    app.post('/imgSaving', TestController.saveIMG);
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });
