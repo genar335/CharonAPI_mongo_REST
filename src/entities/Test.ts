@@ -30,62 +30,65 @@ export interface ITest extends Document {
     pages: Array<IPageV2>;
   };
   pages: number;
-  type: "TT" | "TP" | "PP";
+  type: "TT" | "TP" | "PP" | "PT";
   active: boolean;
 }
 
-export const TestSchema = new Schema({
-  ru: {
-    name: String,
-    mainQuesiton: String,
-    emailSender: Boolean,
-    pages: [
-      {
-        QnAPairs: [
-          {
-            question: String,
-            answer: String,
-          },
-        ],
-      },
-    ],
-  },
+export const TestSchema = new Schema(
+  {
+    ru: {
+      name: String,
+      mainQuesiton: String,
+      emailSender: Boolean,
+      pages: [
+        {
+          QnAPairs: [
+            {
+              question: String,
+              answer: String,
+            },
+          ],
+        },
+      ],
+    },
 
-  lv: {
-    name: String,
-    mainQuesiton: String,
-    emailSender: Boolean,
-    pages: [
-      {
-        QnAPairs: [
-          {
-            question: String,
-            answer: String,
-          },
-        ],
-      },
-    ],
-  },
+    lv: {
+      name: String,
+      mainQuesiton: String,
+      emailSender: Boolean,
+      pages: [
+        {
+          QnAPairs: [
+            {
+              question: String,
+              answer: String,
+            },
+          ],
+        },
+      ],
+    },
 
-  en: {
-    name: String,
-    mainQuesiton: String,
-    emailSender: Boolean,
-    pages: [
-      {
-        QnAPairs: [
-          {
-            question: String,
-            answer: String,
-          },
-        ],
-      },
-    ],
+    en: {
+      name: String,
+      mainQuesiton: String,
+      emailSender: Boolean,
+      pages: [
+        {
+          QnAPairs: [
+            {
+              question: String,
+              answer: String,
+            },
+          ],
+        },
+      ],
+    },
+    type: String,
+    pages: Number,
+    active: Boolean,
   },
-  type: String,
-  pages: Number,
-  active: Boolean,
-});
+  { timestamps: true }
+);
 
 const Test = model<ITest>("Test", TestSchema);
 
