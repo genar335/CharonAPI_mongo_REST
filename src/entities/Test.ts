@@ -14,24 +14,26 @@ export interface ITest extends Document {
   ru: {
     name: string;
     mainQusetion: string;
-    emailSender: Boolean;
     pages: Array<IPageV2>;
+    // emailSender: Boolean;
   };
   lv: {
     name: string;
     mainQusetion: string;
-    emailSender: Boolean;
     pages: Array<IPageV2>;
+    // emailSender: Boolean;
   };
   en: {
     name: string;
     mainQusetion: string;
-    emailSender: Boolean;
     pages: Array<IPageV2>;
+    // emailSender: Boolean;
   };
+
   pages: number;
-  type: "TT" | "TP" | "PP" | "PT";
+  type: "TT" | "TP" | "PP";
   active: boolean;
+  emailSender: boolean;
 }
 
 export const TestSchema = new Schema(
@@ -39,7 +41,9 @@ export const TestSchema = new Schema(
     ru: {
       name: String,
       mainQuesiton: String,
-      emailSender: Boolean,
+      // emailSender: Boolean,
+      finalPageTextHeading: String,
+      finalPageTextBody: String,
       pages: [
         {
           QnAPairs: [
@@ -55,7 +59,9 @@ export const TestSchema = new Schema(
     lv: {
       name: String,
       mainQuesiton: String,
-      emailSender: Boolean,
+      // emailSender: Boolean,
+      finalPageTextHeading: String,
+      finalPageTextBody: String,
       pages: [
         {
           QnAPairs: [
@@ -71,7 +77,9 @@ export const TestSchema = new Schema(
     en: {
       name: String,
       mainQuesiton: String,
-      emailSender: Boolean,
+      // emailSender: Boolean,
+      finalPageTextHeading: String,
+      finalPageTextBody: String,
       pages: [
         {
           QnAPairs: [
@@ -86,6 +94,7 @@ export const TestSchema = new Schema(
     type: String,
     pages: Number,
     active: Boolean,
+    emailSender: Boolean,
   },
   { timestamps: true }
 );

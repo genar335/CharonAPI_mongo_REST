@@ -31,8 +31,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PORT = void 0;
+exports.upload = exports.PORT = void 0;
 const express_1 = __importDefault(require("express"));
+const multer_1 = __importDefault(require("multer"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
 const UserController = __importStar(require("./resolvers/user-actions"));
@@ -41,9 +42,15 @@ const express_session_1 = __importDefault(require("express-session"));
 const redis_1 = __importDefault(require("redis"));
 const connect_redis_1 = __importDefault(require("connect-redis"));
 const cors_1 = __importDefault(require("cors"));
-const express_fileupload_1 = __importDefault(require("express-fileupload"));
+const path_1 = __importDefault(require("path"));
 dotenv.config({});
-exports.PORT = 4000;
+exports.PORT = process.env.PORT || 4000;
+exports.upload = multer_1.default({
+    storage: multer_1.default.diskStorage({
+        destination: (req, file, cb) => cb(null, "dist/public/uploads"),
+        filename: (req, file, cb) => cb(null, `${file.originalname}`),
+    }),
+});
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     try {
@@ -67,8 +74,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         origin: "http://localhost:3000",
         credentials: true,
     }));
-    app.use(express_fileupload_1.default());
-    app.use("/uploads", express_1.default.static(__dirname + "/uploads"));
+    app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
+    console.log(__dirname);
     app.use(express_session_1.default({
         name: "qid",
         store: new RedisStore({
@@ -98,7 +105,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get("/tests/getTestByID", TestController.getTestByID);
     app.get("/tests/allTests", TestController.getAllTests);
     app.get("/tests/deleteTestByID", TestController.deleteTestByID);
-    app.post('/imgSaving', TestController.saveIMG);
+    app.post("/imgSaving", TestController.saveIMG);
+    app.post("/testimg", exports.upload.single("image"), TestController.testFile);
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });

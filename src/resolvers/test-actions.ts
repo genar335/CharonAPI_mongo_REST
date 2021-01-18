@@ -1,6 +1,6 @@
 import Test, { IPageV2, ITest } from "../entities/Test";
 
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import fs from "fs";
 import { PORT } from "../server";
 
@@ -88,7 +88,7 @@ export const getTestsByActiveParam = async (req: Request, res: Response) => {
 };
 
 export const saveIMG = (req: Request, res: Response) => {
-  // console.log(req.body);
+  console.log(req.body);
   if (req.body) {
     const {
       fileName,
@@ -199,3 +199,10 @@ function dataURICoversion(
     whatToChange
   ] = `http://localhost:${PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
 }
+
+export const testFile = (req: Request, res: Response, _: any) => {
+  console.log(req.body);
+  console.log(req.file.originalname);
+
+  res.send(`http://localhost:${PORT}/uploads/${req.file.originalname}`);
+};

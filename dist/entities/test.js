@@ -6,7 +6,8 @@ exports.TestSchema = new mongoose_1.Schema({
     ru: {
         name: String,
         mainQuesiton: String,
-        emailSender: Boolean,
+        finalPageTextHeading: String,
+        finalPageTextBody: String,
         pages: [
             {
                 QnAPairs: [
@@ -21,7 +22,8 @@ exports.TestSchema = new mongoose_1.Schema({
     lv: {
         name: String,
         mainQuesiton: String,
-        emailSender: Boolean,
+        finalPageTextHeading: String,
+        finalPageTextBody: String,
         pages: [
             {
                 QnAPairs: [
@@ -36,7 +38,8 @@ exports.TestSchema = new mongoose_1.Schema({
     en: {
         name: String,
         mainQuesiton: String,
-        emailSender: Boolean,
+        finalPageTextHeading: String,
+        finalPageTextBody: String,
         pages: [
             {
                 QnAPairs: [
@@ -51,6 +54,7 @@ exports.TestSchema = new mongoose_1.Schema({
     type: String,
     pages: Number,
     active: Boolean,
+    emailSender: Boolean,
 }, { timestamps: true });
 const Test = mongoose_1.model("Test", exports.TestSchema);
 exports.default = Test;
