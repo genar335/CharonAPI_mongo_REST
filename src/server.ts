@@ -1,7 +1,7 @@
 import express from "express";
-import socket from "socket.io";
+// import socket from "socket.io";
 import multer from "multer";
-import mongoose, { get } from "mongoose";
+import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import * as UserController from "./resolvers/user-actions";
 import * as TestController from "./resolvers/test-actions";
@@ -11,8 +11,8 @@ import redis from "redis";
 import connectRedis from "connect-redis";
 import cors from "cors";
 // import Test, { ITest } from "./entities/Test";
-import fileUpload from "express-fileupload";
-import Test from "./entities/Test";
+// import fileUpload from "express-fileupload";
+// import Test from "./entities/Test";
 // import fs from "fs";
 import path from "path";
 
@@ -23,8 +23,8 @@ export const PORT = ((process.env.PORT as unknown) as number) || 4000;
 
 export const upload = multer({
   storage: multer.diskStorage({
-    destination: (req, file, cb) => cb(null, "dist/public/uploads"),
-    filename: (req, file, cb) => cb(null, `${file.originalname}`),
+    destination: (_req, _file, cb) => cb(null, "dist/public/uploads"),
+    filename: (_req, file, cb) => cb(null, `${file.originalname}`),
   }),
 });
 
@@ -50,14 +50,13 @@ const main = async () => {
   app.use(express.urlencoded({ limit: "50mb" }));
   app.use(
     cors({
-      origin: "http://localhost:3000",
-      credentials: true,
+      origin: "*",
+      // credentials: true,
     })
   );
 
   // app.use(fileUpload());
   app.use(express.static(path.join(__dirname, "public")));
-  console.log(__dirname);
   app.use(
     session({
       name: "qid",
@@ -97,22 +96,12 @@ const main = async () => {
   app.get("/tests/allTests", TestController.getAllTests);
   app.get("/tests/deleteTestByID", TestController.deleteTestByID);
 
-  app.post("/imgSaving", TestController.saveIMG);
+  // app.post("/imgSaving", TestController.saveIMG);
   app.post("/testimg", upload.single("image"), TestController.testFile);
 
   app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
   });
-
-  //? Not sure whether sockets are gonna be useful
-  // const io = require("socket.io")(4001);
-
-  // io.on("connection", (socket) => {
-  //   console.log("socket connected");
-  //   socket.on("Pages update", (msg) => console.log(msg));
-  //   socket.on("Test changed", (data: ITest) => console.log(data.ru));
-  //   socket.on("disconnect", () => console.log("User disconnected"));
-  // });
 };
 
 main();

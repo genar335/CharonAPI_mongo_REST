@@ -104,7 +104,7 @@ exports.imgSaving = (req, res) => {
     }
     console.log("finish");
 };
-exports.getAllTests = (req, res) => {
+exports.getAllTests = (_req, res) => {
     Test_1.default.find((err, result) => {
         if (err) {
             res.send(err);
@@ -168,6 +168,6 @@ function dataURICoversion(qORa, whatToChange, index, pageIndex) {
 exports.testFile = (req, res, _) => {
     console.log(req.body);
     console.log(req.file.originalname);
-    res.send(`http://localhost:${server_1.PORT}/uploads/${req.file.originalname}`);
+    res.send(`http://192.168.8.100:${server_1.PORT}/uploads/${req.file.originalname}`);
 };
 //# sourceMappingURL=test-actions.js.map

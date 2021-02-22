@@ -47,8 +47,8 @@ dotenv.config({});
 exports.PORT = process.env.PORT || 4000;
 exports.upload = multer_1.default({
     storage: multer_1.default.diskStorage({
-        destination: (req, file, cb) => cb(null, "dist/public/uploads"),
-        filename: (req, file, cb) => cb(null, `${file.originalname}`),
+        destination: (_req, _file, cb) => cb(null, "dist/public/uploads"),
+        filename: (_req, file, cb) => cb(null, `${file.originalname}`),
     }),
 });
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -71,11 +71,9 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.json({ limit: "50mb" }));
     app.use(express_1.default.urlencoded({ limit: "50mb" }));
     app.use(cors_1.default({
-        origin: "http://localhost:3000",
-        credentials: true,
+        origin: "*",
     }));
     app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
-    console.log(__dirname);
     app.use(express_session_1.default({
         name: "qid",
         store: new RedisStore({
@@ -105,7 +103,6 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get("/tests/getTestByID", TestController.getTestByID);
     app.get("/tests/allTests", TestController.getAllTests);
     app.get("/tests/deleteTestByID", TestController.deleteTestByID);
-    app.post("/imgSaving", TestController.saveIMG);
     app.post("/testimg", exports.upload.single("image"), TestController.testFile);
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);

@@ -1,6 +1,6 @@
 import Test, { IPageV2, ITest } from "../entities/Test";
 
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import fs from "fs";
 import { PORT } from "../server";
 
@@ -125,7 +125,7 @@ export const imgSaving = (req: Request, res: Response) => {
   console.log("finish");
 };
 
-export const getAllTests = (req: Request, res: Response) => {
+export const getAllTests = (_req: Request, res: Response) => {
   Test.find((err: any, result: ITest[]): void => {
     if (err) {
       res.send(err);
@@ -204,5 +204,5 @@ export const testFile = (req: Request, res: Response, _: any) => {
   console.log(req.body);
   console.log(req.file.originalname);
 
-  res.send(`http://localhost:${PORT}/uploads/${req.file.originalname}`);
+  res.send(`http://192.168.8.100:${PORT}/uploads/${req.file.originalname}`);
 };
