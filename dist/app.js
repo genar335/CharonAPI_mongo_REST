@@ -68,16 +68,15 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
     app.post(`${host_url}users/log_in`, UserController.login);
-    app.post(`${host_url}tests/create`, TestController.createTest);
-    app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
-    app.post(`${host_url}tests/toggleTestActiveState`, TestController.toggleTestActiveState);
-    app.get(`${host_url}tests/getTest`, TestController.getTestsByActiveParam);
-    app.get(`${host_url}tests/getTestByID`, TestController.getTestByID);
-    app.get(`${host_url}tests/allTests`, TestController.getAllTests);
-    app.get(`${host_url}tests/deleteTestByID`, TestController.deleteTestByID);
+    app.post(`${host_url}/create`, TestController.createTest);
+    app.post(`${host_url}/testIMG`, TestController.imgSaving);
+    app.post(`${host_url}/toggleTestActiveState`, TestController.toggleTestActiveState);
+    app.get(`${host_url}/getTest`, TestController.getTestsByActiveParam);
+    app.get(`${host_url}/getTestByID`, TestController.getTestByID);
+    app.get(`${host_url}/allTests`, TestController.getAllTests);
+    app.get(`${host_url}/deleteTestByID`, TestController.deleteTestByID);
     app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
     app.get(`${host_url}`, TestController.getAllTests);
-    app.get(`${host_url}tests`, ((_, res) => res.send('OIOI')));
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });
