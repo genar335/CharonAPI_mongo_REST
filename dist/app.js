@@ -38,7 +38,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const UserController = __importStar(require("./resolvers/user-actions"));
 const TestController = __importStar(require("./resolvers/test-actions"));
 const cors_1 = __importDefault(require("cors"));
-const path_1 = __importDefault(require("path"));
 const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
 exports.PORT = process.env.PORT || 4000;
 exports.upload = multer_1.default({
@@ -64,7 +63,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(cors_1.default({
         origin: 'https://vigilant-torvalds-39724e.netlify.app',
     }));
-    app.use(express_1.default.static(path_1.default.join(__dirname, `public`)));
+    app.use(express_1.default.static(`public`));
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
     app.get(`${host_url}users/login`, ((req, res) => res.send(req.originalUrl)));
