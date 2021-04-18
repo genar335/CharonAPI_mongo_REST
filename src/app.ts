@@ -44,6 +44,7 @@ const main = async () => {
   let accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
   app.use(morgan('combined', { stream: accessLogStream }))
 
+  console.log(__dirname);
 
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));
