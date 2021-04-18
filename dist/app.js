@@ -61,7 +61,9 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     mongoose_1.default.set(`debug`, true);
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
-    app.use(cors_1.default());
+    app.use(cors_1.default({
+        origin: 'https://vigilant-torvalds-39724e.netlify.app/'
+    }));
     app.use(express_1.default.static(path_1.default.join(__dirname, `public`)));
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
