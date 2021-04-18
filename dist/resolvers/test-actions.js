@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.testFile = exports.deleteTestByID = exports.getTestByID = exports.toggleTestActiveState = exports.getAllTests = exports.imgSaving = exports.saveIMG = exports.getTestsByActiveParam = exports.createTest = void 0;
-const Test_1 = __importDefault(require("../entities/Test"));
+const test_1 = __importDefault(require("../entities/test"));
 const fs_1 = __importDefault(require("fs"));
-const server_1 = require("../server");
+const app_1 = require("../app");
 const createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const arrivedData = req.body;
     if (!arrivedData._id) {
@@ -41,7 +41,7 @@ const createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             console.log(error);
         }
         try {
-            const test = yield Test_1.default.create(arrivedData);
+            const test = yield test_1.default.create(arrivedData);
             res.send(test);
         }
         catch (error) {
@@ -50,7 +50,7 @@ const createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
     }
     else {
-        Test_1.default.updateOne({
+        test_1.default.updateOne({
             _id: req.body._id,
         }, req.body, (err, result) => {
             if (err) {
@@ -64,7 +64,7 @@ exports.createTest = createTest;
 const getTestsByActiveParam = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.query);
     if (req.query.active) {
-        Test_1.default.find({
+        test_1.default.find({
             active: req.query.active,
         }, (err, result) => {
             if (err) {
@@ -85,7 +85,7 @@ const saveIMG = (req, res) => {
         let data = fileContents.split(",")[1];
         let buffer = Buffer.from(data, "base64");
         fs_1.default.writeFileSync(`dist/uploads/${fileName}`, buffer);
-        res.send(`http://localhost:${server_1.PORT}/uploads/${fileName}`);
+        res.send(`http://localhost:${app_1.PORT}/uploads/${fileName}`);
     }
 };
 exports.saveIMG = saveIMG;
@@ -100,7 +100,7 @@ const imgSaving = (req, res) => {
             console.log("starting to read the file");
             fs_1.default.writeFileSync(`dist/uploads/img_${index}.${ext}`, buffer);
             console.log(buffer);
-            imgsLocation.push(`http://localhost:${server_1.PORT}/uploads/img_${index}.` + ext);
+            imgsLocation.push(`http://localhost:${app_1.PORT}/uploads/img_${index}.` + ext);
         });
         console.log("Done parsing the images");
         res.send(imgsLocation);
@@ -109,7 +109,7 @@ const imgSaving = (req, res) => {
 };
 exports.imgSaving = imgSaving;
 const getAllTests = (_req, res) => {
-    Test_1.default.find((err, result) => {
+    test_1.default.find((err, result) => {
         if (err) {
             res.send(err);
         }
@@ -123,7 +123,7 @@ exports.getAllTests = getAllTests;
 const toggleTestActiveState = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { testID, isActive } = req.body;
     console.log(testID, isActive);
-    const changedTest = yield Test_1.default.findOneAndUpdate({ _id: testID }, {
+    const changedTest = yield test_1.default.findOneAndUpdate({ _id: testID }, {
         active: isActive,
     }, { new: true });
     console.log(changedTest);
@@ -134,7 +134,7 @@ const getTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     console.log(req.query, "hello");
     if (req.query.testToEdit !== undefined) {
         try {
-            const testToEditFromDB = yield Test_1.default.findById(req.query.testToEdit);
+            const testToEditFromDB = yield test_1.default.findById(req.query.testToEdit);
             console.log(testToEditFromDB);
             res.send(testToEditFromDB);
         }
@@ -150,7 +150,7 @@ exports.getTestByID = getTestByID;
 const deleteTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.query.testToDelete) {
         try {
-            const deletedTest = yield Test_1.default.findByIdAndDelete(req.query.testToDelete);
+            const deletedTest = yield test_1.default.findByIdAndDelete(req.query.testToDelete);
             res.send(deletedTest);
         }
         catch (error) {
@@ -171,12 +171,12 @@ function dataURICoversion(qORa, whatToChange, index, pageIndex) {
     let buffer = Buffer.from(data, "base64");
     console.log(buffer);
     fs_1.default.writeFileSync(`dist/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`, buffer);
-    qORa[whatToChange] = `http://localhost:${server_1.PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
+    qORa[whatToChange] = `http://localhost:${app_1.PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
 }
 const testFile = (req, res, _) => {
     console.log(req.body);
     console.log(req.file.originalname);
-    res.send(`http://192.168.8.100:${server_1.PORT}/uploads/${req.file.originalname}`);
+    res.send(`http://192.168.8.100:${app_1.PORT}/uploads/${req.file.originalname}`);
 };
 exports.testFile = testFile;
 //# sourceMappingURL=test-actions.js.map
