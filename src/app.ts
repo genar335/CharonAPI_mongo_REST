@@ -15,14 +15,14 @@ import cors from "cors";
 import path from "path";
 
 const mongoDBConnectionURI = 
-"mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority"
+`mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`
 
 
 export const PORT = ((process.env.PORT as unknown) as number) || 4000;
 
 export const upload = multer({
   storage: multer.diskStorage({
-    destination: (_req, _file, cb) => cb(null, "dist/public/uploads"),
+    destination: (_req, _file, cb) => cb(null, `dist/public/uploads`),
     filename: (_req, file, cb) => cb(null, `${file.originalname}`),
   }),
 });
@@ -37,27 +37,27 @@ const main = async () => {
   } catch (error) {
     console.error(error);
   }
-  mongoose.set("debug", true);
+  mongoose.set(`debug`, true);
 
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb" }));
+  app.use(express.json({ limit: `50mb` }));
+  app.use(express.urlencoded({ limit: `50mb` }));
   app.use(
     cors({
-      origin: "*",
+      origin: `*`,
       // credentials: true,
     })
   );
 
   // app.use(fileUpload());
-  app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.static(path.join(__dirname, `public`)));
   // app.use(
   //   session({
-  //     name: "qid",
+  //     name: `/api/qid`,
   //     store: new RedisStore({
   //       client: redisClient,
   //       disableTouch: true,
   //       disableTTL: true,
-  //       host: "localhost",
+  //       host: `localhost`,
   //       port: 6379,
   //       ttl: 86400,
   //     }),
@@ -65,9 +65,9 @@ const main = async () => {
   //       maxAge: 1000 * 60 * 60 * 24 * 365,
   //       httpOnly: true,
   //       secure: false,
-  //       sameSite: "lax",
+  //       sameSite: `lax`,
   //     },
-  //     secret: "fhjdskalfhdsjklafhfhguirjewhjkgwjkf",
+  //     secret: `fhjdskalfhdsjklafhfhguirjewhjkgwjkf`,
   //     resave: false,
   //     saveUninitialized: false,
   //   })
@@ -75,24 +75,26 @@ const main = async () => {
 
   //* Routes configuration
 
-  app.post("/users/create", UserController.createUser);
-  app.post("/users/log_in", UserController.login);
+    const host_url: string = '/api/quiz/';
 
-  app.post("/tests/create", TestController.createTest);
-  app.post("/tests/testIMG", TestController.imgSaving);
+  app.post(`${host_url}users/create`, UserController.createUser);
+  app.post(`${host_url}users/log_in`, UserController.login);
+
+  app.post(`${host_url}tests/create`, TestController.createTest);
+  app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
   app.post(
-    "/tests/toggleTestActiveState",
+    `${host_url}tests/toggleTestActiveState`,
     TestController.toggleTestActiveState
   );
-  app.get("/tests/getTest", TestController.getTestsByActiveParam);
-  app.get("/tests/getTestByID", TestController.getTestByID);
-  app.get("/tests/allTests", TestController.getAllTests);
-  app.get("/tests/deleteTestByID", TestController.deleteTestByID);
+  app.get(`${host_url}tests/getTest`, TestController.getTestsByActiveParam);
+  app.get(`${host_url}tests/getTestByID`, TestController.getTestByID);
+  app.get(`${host_url}tests/allTests`, TestController.getAllTests);
+  app.get(`${host_url}tests/deleteTestByID`, TestController.deleteTestByID);
 
-  // app.post("/imgSaving", TestController.saveIMG);
-  app.post("/testimg", upload.single("image"), TestController.testFile);
+  // app.post(`/imgSaving`, TestController.saveIMG);
+  app.post(`${host_url}testimg`, upload.single(`image`), TestController.testFile);
 
-  app.get("/", (_, res) => res.send('Hello there!'))
+  app.get(`${host_url}`, (_, res) => res.send('Hello there!'))
 
   app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);

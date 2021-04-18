@@ -39,11 +39,11 @@ const UserController = __importStar(require("./resolvers/user-actions"));
 const TestController = __importStar(require("./resolvers/test-actions"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
-const mongoDBConnectionURI = "mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority";
+const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
 exports.PORT = process.env.PORT || 4000;
 exports.upload = multer_1.default({
     storage: multer_1.default.diskStorage({
-        destination: (_req, _file, cb) => cb(null, "dist/public/uploads"),
+        destination: (_req, _file, cb) => cb(null, `dist/public/uploads`),
         filename: (_req, file, cb) => cb(null, `${file.originalname}`),
     }),
 });
@@ -58,24 +58,25 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         console.error(error);
     }
-    mongoose_1.default.set("debug", true);
-    app.use(express_1.default.json({ limit: "50mb" }));
-    app.use(express_1.default.urlencoded({ limit: "50mb" }));
+    mongoose_1.default.set(`debug`, true);
+    app.use(express_1.default.json({ limit: `50mb` }));
+    app.use(express_1.default.urlencoded({ limit: `50mb` }));
     app.use(cors_1.default({
-        origin: "*",
+        origin: `*`,
     }));
-    app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
-    app.post("/users/create", UserController.createUser);
-    app.post("/users/log_in", UserController.login);
-    app.post("/tests/create", TestController.createTest);
-    app.post("/tests/testIMG", TestController.imgSaving);
-    app.post("/tests/toggleTestActiveState", TestController.toggleTestActiveState);
-    app.get("/tests/getTest", TestController.getTestsByActiveParam);
-    app.get("/tests/getTestByID", TestController.getTestByID);
-    app.get("/tests/allTests", TestController.getAllTests);
-    app.get("/tests/deleteTestByID", TestController.deleteTestByID);
-    app.post("/testimg", exports.upload.single("image"), TestController.testFile);
-    app.get("/", (_, res) => res.send('Hello there!'));
+    app.use(express_1.default.static(path_1.default.join(__dirname, `public`)));
+    const host_url = '/api/quiz/';
+    app.post(`${host_url}users/create`, UserController.createUser);
+    app.post(`${host_url}users/log_in`, UserController.login);
+    app.post(`${host_url}tests/create`, TestController.createTest);
+    app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
+    app.post(`${host_url}tests/toggleTestActiveState`, TestController.toggleTestActiveState);
+    app.get(`${host_url}tests/getTest`, TestController.getTestsByActiveParam);
+    app.get(`${host_url}tests/getTestByID`, TestController.getTestByID);
+    app.get(`${host_url}tests/allTests`, TestController.getAllTests);
+    app.get(`${host_url}tests/deleteTestByID`, TestController.deleteTestByID);
+    app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
+    app.get(`${host_url}`, (_, res) => res.send('Hello there!'));
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });
