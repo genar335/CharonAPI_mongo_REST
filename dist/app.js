@@ -65,6 +65,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         origin: `*`,
     }));
     app.use(express_1.default.static(path_1.default.join(__dirname, `public`)));
+    app.all('*', function (req, res) { res.send(200, req.originalUrl); });
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
     app.get(`${host_url}users/login`, ((req, res) => res.send(req.originalUrl)));

@@ -74,7 +74,7 @@ const main = async () => {
   // );
 
   //* Routes configuration
-
+  app.all('*', function(req,res){ res.send(200, req.originalUrl) });
     const host_url: string = '/api/quiz/';
 
   app.post(`${host_url}users/create`, UserController.createUser);
