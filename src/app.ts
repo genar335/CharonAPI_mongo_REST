@@ -52,7 +52,7 @@ const main = async () => {
   // });
 
   // app.use(fileUpload());
-  app.use(express.static(/* path.join(__dirname,  */`public`))/* ) */;
+  app.use(express.static(path.join(__dirname, `public`)));
 
   //* Routes configuration
   // app.all('*', function(req,res){ res.send(200, req.originalUrl) });
