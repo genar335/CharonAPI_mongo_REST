@@ -13,6 +13,8 @@ import cors from "cors";
 // import Test from "./entities/Test";
 // import fs from "fs";
 import path from "path";
+import fs from "fs";
+import morgan from "morgan";
 
 const mongoDBConnectionURI = 
 `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`
@@ -38,6 +40,10 @@ const main = async () => {
     console.error(error);
   }
   mongoose.set(`debug`, true);
+
+  let accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+  app.use(morgan('combined', { stream: accessLogStream }))
+
 
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));

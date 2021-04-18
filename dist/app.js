@@ -39,6 +39,8 @@ const UserController = __importStar(require("./resolvers/user-actions"));
 const TestController = __importStar(require("./resolvers/test-actions"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
+const morgan_1 = __importDefault(require("morgan"));
 const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
 exports.PORT = process.env.PORT || 4000;
 exports.upload = multer_1.default({
@@ -59,6 +61,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error(error);
     }
     mongoose_1.default.set(`debug`, true);
+    let accessLogStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, 'access.log'), { flags: 'a' });
+    app.use(morgan_1.default('combined', { stream: accessLogStream }));
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
     app.use(cors_1.default({
