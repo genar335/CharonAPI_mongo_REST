@@ -50,31 +50,9 @@ const main = async () => {
 
   // app.use(fileUpload());
   app.use(express.static(path.join(__dirname, `public`)));
-  // app.use(
-  //   session({
-  //     name: `/api/qid`,
-  //     store: new RedisStore({
-  //       client: redisClient,
-  //       disableTouch: true,
-  //       disableTTL: true,
-  //       host: `localhost`,
-  //       port: 6379,
-  //       ttl: 86400,
-  //     }),
-  //     cookie: {
-  //       maxAge: 1000 * 60 * 60 * 24 * 365,
-  //       httpOnly: true,
-  //       secure: false,
-  //       sameSite: `lax`,
-  //     },
-  //     secret: `fhjdskalfhdsjklafhfhguirjewhjkgwjkf`,
-  //     resave: false,
-  //     saveUninitialized: false,
-  //   })
-  // );
 
   //* Routes configuration
-  app.all('*', function(req,res){ res.send(200, req.originalUrl) });
+  // app.all('*', function(req,res){ res.send(200, req.originalUrl) });
     const host_url: string = '/api/quiz/';
 
   app.post(`${host_url}users/create`, UserController.createUser);
@@ -96,11 +74,17 @@ const main = async () => {
   app.post(`${host_url}testimg`, upload.single(`image`), TestController.testFile);
 
   // app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
-  app.get(`${host_url}`, ((req: express.Request, res: express.Response) => res.send(res.redirect(`${host_url}allTests`))))
+  app.get(`${host_url}`, ((req: express.Request, res: express.Response) => res.json(req)))
+
+  app.use(function (req, res, next) {
+    res.status(404).send("Sorry can't find that!")
+  })
 
   app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
   });
+
+
 };
 
 main();

@@ -65,7 +65,6 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         origin: `*`,
     }));
     app.use(express_1.default.static(path_1.default.join(__dirname, `public`)));
-    app.all('*', function (req, res) { res.send(200, req.originalUrl); });
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
     app.get(`${host_url}users/login`, ((req, res) => res.send(req.originalUrl)));
@@ -77,7 +76,10 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get(`${host_url}allTests`, TestController.getAllTests);
     app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
     app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
-    app.get(`${host_url}`, ((req, res) => res.send(res.redirect(`${host_url}allTests`))));
+    app.get(`${host_url}`, ((req, res) => res.json(req)));
+    app.use(function (req, res, next) {
+        res.status(404).send("Sorry can't find that!");
+    });
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });
