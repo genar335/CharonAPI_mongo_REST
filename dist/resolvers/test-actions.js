@@ -176,7 +176,7 @@ function dataURICoversion(qORa, whatToChange, index, pageIndex) {
 const testFile = (req, res, _) => {
     console.log(req.body);
     console.log(req.file.originalname);
-    res.send(`http://192.168.8.100:${app_1.PORT}/uploads/${req.file.originalname}`);
+    res.send(req.file);
 };
 exports.testFile = testFile;
 //# sourceMappingURL=test-actions.js.map
