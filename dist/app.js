@@ -37,6 +37,7 @@ const multer_1 = __importDefault(require("multer"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const UserController = __importStar(require("./resolvers/user-actions"));
 const TestController = __importStar(require("./resolvers/test-actions"));
+const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
 exports.PORT = process.env.PORT || 4000;
@@ -60,11 +61,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     mongoose_1.default.set(`debug`, true);
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
-    app.use(function (req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
+    app.use(cors_1.default());
     app.use(express_1.default.static(path_1.default.join(__dirname, `public`)));
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
