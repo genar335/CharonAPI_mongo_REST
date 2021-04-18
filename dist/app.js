@@ -76,7 +76,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get(`${host_url}tests/allTests`, TestController.getAllTests);
     app.get(`${host_url}tests/deleteTestByID`, TestController.deleteTestByID);
     app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
-    app.get(`${host_url}`, (_, res) => res.send('Hello there!'));
+    app.get(`${host_url}`, TestController.getAllTests);
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });

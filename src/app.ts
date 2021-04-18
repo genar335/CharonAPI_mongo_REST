@@ -94,7 +94,8 @@ const main = async () => {
   // app.post(`/imgSaving`, TestController.saveIMG);
   app.post(`${host_url}testimg`, upload.single(`image`), TestController.testFile);
 
-  app.get(`${host_url}`, (_, res) => res.send('Hello there!'))
+  app.get(`${host_url}`, TestController.getAllTests/* (_, res) => res.send('Hello there!') */)
+
 
   app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
