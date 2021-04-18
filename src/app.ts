@@ -42,7 +42,7 @@ const main = async () => {
   mongoose.set(`debug`, true);
 
   let accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
-  app.use(morgan('combined', { stream: accessLogStream }))
+  app.use(morgan('dev', { stream: accessLogStream }))
 
   console.log(__dirname);
 
