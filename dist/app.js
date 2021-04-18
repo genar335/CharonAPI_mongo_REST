@@ -73,7 +73,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.post(`${host_url}toggleTestActiveState`, TestController.toggleTestActiveState);
     app.get(`${host_url}getTest`, TestController.getTestsByActiveParam);
     app.get(`${host_url}getTestByID`, TestController.getTestByID);
-    app.get(`allTests`, TestController.getAllTests);
+    app.get(`${host_url}allTests`, TestController.getAllTests);
     app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
     app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
     app.get(`${host_url}`, ((req, res) => res.send(req.headers)));

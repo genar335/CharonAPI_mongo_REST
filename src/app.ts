@@ -88,7 +88,7 @@ const main = async () => {
   );
   app.get(`${host_url}getTest`, TestController.getTestsByActiveParam);
   app.get(`${host_url}getTestByID`, TestController.getTestByID);
-  app.get(`allTests`, TestController.getAllTests);
+  app.get(`${host_url}allTests`, TestController.getAllTests);
   app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
 
   // app.post(`/imgSaving`, TestController.saveIMG);
