@@ -7,7 +7,6 @@ export interface IPage extends mongoose.Document {
       question: string;
       answer: string;
       // QnAPair: IQnAPair;
-      // //   ref: string;
     }
   ];
 }

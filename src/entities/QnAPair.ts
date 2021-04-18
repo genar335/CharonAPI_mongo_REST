@@ -1,15 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-// export type TQnA = {
-//   quesiton: {
-//     imgURL?: string;
-//     text?: string;
-//   };
-//   answer: {
-//     imgURL?: string;
-//     text?: string;
-//   };
-// };
 
 export interface IQnAPair extends mongoose.Document {
   question: string;

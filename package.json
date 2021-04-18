@@ -6,7 +6,7 @@
   "author": "itlemonade",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn nodemon ./dist/server.js"
+    "dev": "yarn nodemon ./dist/app.js"
   },
   "dependencies": {
     "@types/express-fileupload": "^1.1.5",
