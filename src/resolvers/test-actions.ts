@@ -203,6 +203,6 @@ function dataURICoversion(
 export const testFile = (req: Request, res: Response, _: any) => {
   console.log(req.body);
   console.log(req.file.originalname);
-  res.send(req.file)
-  // res.send(`http://192.168.8.100:${PORT}/uploads/${req.file.originalname}`);
+  // res.send(req.file)
+  res.send(`http://192.168.8.100:${PORT}/uploads/${req.file.originalname}`);
 };
