@@ -59,19 +59,19 @@ const main = async () => {
   // app.post(`${host_url}users/log_in`, UserController.login);
   app.get(`${host_url}users/login`, ((req: express.Request, res: express.Response) => res.send(req.originalUrl)))
 
-  app.post(`${host_url}create`, TestController.createTest);
-  app.post(`${host_url}testIMG`, TestController.imgSaving);
+  app.post(`${host_url}tests/create`, TestController.createTest);
+  app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
   app.post(
-    `${host_url}toggleTestActiveState`,
+    `${host_url}tests/toggleTestActiveState`,
     TestController.toggleTestActiveState
   );
-  app.get(`${host_url}getTest`, TestController.getTestsByActiveParam);
-  app.get(`${host_url}getTestByID`, TestController.getTestByID);
-  app.get(`${host_url}allTests`, TestController.getAllTests);
-  app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
+  app.get(`${host_url}tests/getTest`, TestController.getTestsByActiveParam);
+  app.get(`${host_url}tests/getTestByID`, TestController.getTestByID);
+  app.get(`${host_url}tests/allTests`, TestController.getAllTests);
+  app.get(`${host_url}tests/deleteTestByID`, TestController.deleteTestByID);
 
   // app.post(`/imgSaving`, TestController.saveIMG);
-  app.post(`${host_url}testimg`, upload.single(`image`), TestController.testFile);
+  app.post(`${host_url}tests/testimg`, upload.single(`image`), TestController.testFile);
 
   // app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
   app.get(`${host_url}`, ((req: express.Request, res: express.Response) => res.json(req)))

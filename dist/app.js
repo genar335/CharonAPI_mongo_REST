@@ -68,14 +68,14 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
     app.get(`${host_url}users/login`, ((req, res) => res.send(req.originalUrl)));
-    app.post(`${host_url}create`, TestController.createTest);
-    app.post(`${host_url}testIMG`, TestController.imgSaving);
-    app.post(`${host_url}toggleTestActiveState`, TestController.toggleTestActiveState);
-    app.get(`${host_url}getTest`, TestController.getTestsByActiveParam);
-    app.get(`${host_url}getTestByID`, TestController.getTestByID);
-    app.get(`${host_url}allTests`, TestController.getAllTests);
-    app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
-    app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
+    app.post(`${host_url}tests/create`, TestController.createTest);
+    app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
+    app.post(`${host_url}tests/toggleTestActiveState`, TestController.toggleTestActiveState);
+    app.get(`${host_url}tests/getTest`, TestController.getTestsByActiveParam);
+    app.get(`${host_url}tests/getTestByID`, TestController.getTestByID);
+    app.get(`${host_url}tests/allTests`, TestController.getAllTests);
+    app.get(`${host_url}tests/deleteTestByID`, TestController.deleteTestByID);
+    app.post(`${host_url}tests/testimg`, exports.upload.single(`image`), TestController.testFile);
     app.get(`${host_url}`, ((req, res) => res.json(req)));
     app.use(function (req, res, next) {
         res.status(404).send("Sorry can't find that!");
