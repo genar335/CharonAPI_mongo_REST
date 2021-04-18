@@ -35,15 +35,11 @@ exports.upload = exports.PORT = void 0;
 const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv = __importStar(require("dotenv"));
 const UserController = __importStar(require("./resolvers/user-actions"));
 const TestController = __importStar(require("./resolvers/test-actions"));
-const express_session_1 = __importDefault(require("express-session"));
-const redis_1 = __importDefault(require("redis"));
-const connect_redis_1 = __importDefault(require("connect-redis"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
-dotenv.config({});
+const mongoDBConnectionURI = "mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority";
 exports.PORT = process.env.PORT || 4000;
 exports.upload = multer_1.default({
     storage: multer_1.default.diskStorage({
@@ -54,7 +50,7 @@ exports.upload = multer_1.default({
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     try {
-        mongoose_1.default.connect(process.env.DB_HOST, {
+        mongoose_1.default.connect(mongoDBConnectionURI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -63,37 +59,12 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error(error);
     }
     mongoose_1.default.set("debug", true);
-    const RedisStore = connect_redis_1.default(express_session_1.default);
-    const redisClient = redis_1.default.createClient();
-    redisClient.on("error", (err) => {
-        console.log("Redis error: ", err);
-    });
     app.use(express_1.default.json({ limit: "50mb" }));
     app.use(express_1.default.urlencoded({ limit: "50mb" }));
     app.use(cors_1.default({
         origin: "*",
     }));
     app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
-    app.use(express_session_1.default({
-        name: "qid",
-        store: new RedisStore({
-            client: redisClient,
-            disableTouch: true,
-            disableTTL: true,
-            host: "localhost",
-            port: 6379,
-            ttl: 86400,
-        }),
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 365,
-            httpOnly: true,
-            secure: false,
-            sameSite: "lax",
-        },
-        secret: "fhjdskalfhdsjklafhfhguirjewhjkgwjkf",
-        resave: false,
-        saveUninitialized: false,
-    }));
     app.post("/users/create", UserController.createUser);
     app.post("/users/log_in", UserController.login);
     app.post("/tests/create", TestController.createTest);

@@ -2,13 +2,11 @@ import express from "express";
 // import socket from "socket.io";
 import multer from "multer";
 import mongoose from "mongoose";
-import * as dotenv from "dotenv";
+// import * as dotenv from "dotenv";
 import * as UserController from "./resolvers/user-actions";
 import * as TestController from "./resolvers/test-actions";
 // import bodyParser from "body-parser";
-import session from "express-session";
-import redis from "redis";
-import connectRedis from "connect-redis";
+// import session from "express-session";
 import cors from "cors";
 // import Test, { ITest } from "./entities/Test";
 // import fileUpload from "express-fileupload";
@@ -16,9 +14,10 @@ import cors from "cors";
 // import fs from "fs";
 import path from "path";
 
-dotenv.config({
-  //   path: "../.env",
-});
+const mongoDBConnectionURI = 
+"mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority"
+
+
 export const PORT = ((process.env.PORT as unknown) as number) || 4000;
 
 export const upload = multer({
@@ -31,7 +30,7 @@ export const upload = multer({
 const main = async () => {
   const app = express();
   try {
-    mongoose.connect(process.env.DB_HOST as string, {
+    mongoose.connect(/* process.env.DB_HOST */ mongoDBConnectionURI as string, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -39,12 +38,6 @@ const main = async () => {
     console.error(error);
   }
   mongoose.set("debug", true);
-  const RedisStore = connectRedis(session);
-  const redisClient = redis.createClient();
-
-  redisClient.on("error", (err) => {
-    console.log("Redis error: ", err);
-  });
 
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb" }));
@@ -57,28 +50,28 @@ const main = async () => {
 
   // app.use(fileUpload());
   app.use(express.static(path.join(__dirname, "public")));
-  app.use(
-    session({
-      name: "qid",
-      store: new RedisStore({
-        client: redisClient,
-        disableTouch: true,
-        disableTTL: true,
-        host: "localhost",
-        port: 6379,
-        ttl: 86400,
-      }),
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 365,
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-      },
-      secret: "fhjdskalfhdsjklafhfhguirjewhjkgwjkf",
-      resave: false,
-      saveUninitialized: false,
-    })
-  );
+  // app.use(
+  //   session({
+  //     name: "qid",
+  //     store: new RedisStore({
+  //       client: redisClient,
+  //       disableTouch: true,
+  //       disableTTL: true,
+  //       host: "localhost",
+  //       port: 6379,
+  //       ttl: 86400,
+  //     }),
+  //     cookie: {
+  //       maxAge: 1000 * 60 * 60 * 24 * 365,
+  //       httpOnly: true,
+  //       secure: false,
+  //       sameSite: "lax",
+  //     },
+  //     secret: "fhjdskalfhdsjklafhfhguirjewhjkgwjkf",
+  //     resave: false,
+  //     saveUninitialized: false,
+  //   })
+  // );
 
   //* Routes configuration
 

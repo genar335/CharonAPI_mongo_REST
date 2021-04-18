@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.createUser = void 0;
 const user_1 = __importDefault(require("../entities/user"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-exports.createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     const uPasswordHashed = yield bcrypt_1.default.hash(req.body.password, 10);
     const newUser = yield user_1.default.create({
@@ -25,7 +25,8 @@ exports.createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     console.log(newUser);
     res.send(newUser);
 });
-exports.login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.createUser = createUser;
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.session.userID) {
         res.send("Already logged in!");
     }
@@ -49,4 +50,5 @@ exports.login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
 });
+exports.login = login;
 //# sourceMappingURL=user-actions.js.map

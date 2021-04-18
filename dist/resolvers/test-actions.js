@@ -16,7 +16,7 @@ exports.testFile = exports.deleteTestByID = exports.getTestByID = exports.toggle
 const Test_1 = __importDefault(require("../entities/Test"));
 const fs_1 = __importDefault(require("fs"));
 const server_1 = require("../server");
-exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const arrivedData = req.body;
     if (!arrivedData._id) {
         try {
@@ -60,7 +60,8 @@ exports.createTest = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
     }
 });
-exports.getTestsByActiveParam = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.createTest = createTest;
+const getTestsByActiveParam = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.query);
     if (req.query.active) {
         Test_1.default.find({
@@ -75,7 +76,8 @@ exports.getTestsByActiveParam = (req, res) => __awaiter(void 0, void 0, void 0, 
         });
     }
 });
-exports.saveIMG = (req, res) => {
+exports.getTestsByActiveParam = getTestsByActiveParam;
+const saveIMG = (req, res) => {
     console.log(req.body);
     if (req.body) {
         const { fileName, fileContents, } = req.body;
@@ -86,7 +88,8 @@ exports.saveIMG = (req, res) => {
         res.send(`http://localhost:${server_1.PORT}/uploads/${fileName}`);
     }
 };
-exports.imgSaving = (req, res) => {
+exports.saveIMG = saveIMG;
+const imgSaving = (req, res) => {
     console.log("recieved the img");
     if (req.body) {
         let imgsLocation = [];
@@ -104,7 +107,8 @@ exports.imgSaving = (req, res) => {
     }
     console.log("finish");
 };
-exports.getAllTests = (_req, res) => {
+exports.imgSaving = imgSaving;
+const getAllTests = (_req, res) => {
     Test_1.default.find((err, result) => {
         if (err) {
             res.send(err);
@@ -115,7 +119,8 @@ exports.getAllTests = (_req, res) => {
         }
     });
 };
-exports.toggleTestActiveState = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getAllTests = getAllTests;
+const toggleTestActiveState = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { testID, isActive } = req.body;
     console.log(testID, isActive);
     const changedTest = yield Test_1.default.findOneAndUpdate({ _id: testID }, {
@@ -124,7 +129,8 @@ exports.toggleTestActiveState = (req, res) => __awaiter(void 0, void 0, void 0, 
     console.log(changedTest);
     res.send(changedTest);
 });
-exports.getTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.toggleTestActiveState = toggleTestActiveState;
+const getTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.query, "hello");
     if (req.query.testToEdit !== undefined) {
         try {
@@ -140,7 +146,8 @@ exports.getTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(400).send("Sorry, no correct ID was supplied");
     }
 });
-exports.deleteTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getTestByID = getTestByID;
+const deleteTestByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.query.testToDelete) {
         try {
             const deletedTest = yield Test_1.default.findByIdAndDelete(req.query.testToDelete);
@@ -152,6 +159,7 @@ exports.deleteTestByID = (req, res) => __awaiter(void 0, void 0, void 0, functio
         }
     }
 });
+exports.deleteTestByID = deleteTestByID;
 function dataURICoversion(qORa, whatToChange, index, pageIndex) {
     let tmp = qORa[whatToChange];
     let ext = tmp.slice(tmp.indexOf("/") + 1, tmp.indexOf(";"));
@@ -165,9 +173,10 @@ function dataURICoversion(qORa, whatToChange, index, pageIndex) {
     fs_1.default.writeFileSync(`dist/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`, buffer);
     qORa[whatToChange] = `http://localhost:${server_1.PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
 }
-exports.testFile = (req, res, _) => {
+const testFile = (req, res, _) => {
     console.log(req.body);
     console.log(req.file.originalname);
     res.send(`http://192.168.8.100:${server_1.PORT}/uploads/${req.file.originalname}`);
 };
+exports.testFile = testFile;
 //# sourceMappingURL=test-actions.js.map
