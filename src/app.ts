@@ -78,7 +78,8 @@ const main = async () => {
     const host_url: string = '/api/quiz/';
 
   app.post(`${host_url}users/create`, UserController.createUser);
-  app.post(`${host_url}users/log_in`, UserController.login);
+  // app.post(`${host_url}users/log_in`, UserController.login);
+  app.get(`${host_url}users/login`, ((req: express.Request, res: express.Response) => res.send(req.originalUrl)))
 
   app.post(`${host_url}create`, TestController.createTest);
   app.post(`${host_url}testIMG`, TestController.imgSaving);
@@ -95,7 +96,7 @@ const main = async () => {
   app.post(`${host_url}testimg`, upload.single(`image`), TestController.testFile);
 
   // app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
-  app.get(`${host_url}`, ((req: express.Request, res: express.Response) => res.send(req.headers)))
+  app.get(`${host_url}`, ((req: express.Request, res: express.Response) => res.send(req.originalUrl)))
 
   app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);

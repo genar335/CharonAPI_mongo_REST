@@ -67,7 +67,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.static(path_1.default.join(__dirname, `public`)));
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
-    app.post(`${host_url}users/log_in`, UserController.login);
+    app.get(`${host_url}users/login`, ((req, res) => res.send(req.originalUrl)));
     app.post(`${host_url}create`, TestController.createTest);
     app.post(`${host_url}testIMG`, TestController.imgSaving);
     app.post(`${host_url}toggleTestActiveState`, TestController.toggleTestActiveState);
@@ -76,7 +76,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get(`${host_url}allTests`, TestController.getAllTests);
     app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
     app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
-    app.get(`${host_url}`, ((req, res) => res.send(req.headers)));
+    app.get(`${host_url}`, ((req, res) => res.send(req.originalUrl)));
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });
