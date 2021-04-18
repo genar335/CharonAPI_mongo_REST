@@ -42,10 +42,10 @@ const main = async () => {
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));
   app.use(
-    cors({
-      origin: `*`,
+    cors(
+      // origin: `*`,
       // credentials: true,
-    })
+    )
   );
 
   // app.use(fileUpload());
