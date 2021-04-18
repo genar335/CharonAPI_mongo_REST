@@ -73,10 +73,10 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.post(`${host_url}toggleTestActiveState`, TestController.toggleTestActiveState);
     app.get(`${host_url}getTest`, TestController.getTestsByActiveParam);
     app.get(`${host_url}getTestByID`, TestController.getTestByID);
-    app.get(`${host_url}allTests`, TestController.getAllTests);
+    app.get(`allTests`, TestController.getAllTests);
     app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
     app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
-    app.get(`${host_url}`, TestController.getAllTests);
+    app.get(`${host_url}`, ((_, res) => res.send('OIOI')));
     app.listen(exports.PORT, () => {
         console.log(`Server started on port: ${exports.PORT}`);
     });

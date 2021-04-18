@@ -88,14 +88,14 @@ const main = async () => {
   );
   app.get(`${host_url}getTest`, TestController.getTestsByActiveParam);
   app.get(`${host_url}getTestByID`, TestController.getTestByID);
-  app.get(`${host_url}allTests`, TestController.getAllTests);
+  app.get(`allTests`, TestController.getAllTests);
   app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
 
   // app.post(`/imgSaving`, TestController.saveIMG);
   app.post(`${host_url}testimg`, upload.single(`image`), TestController.testFile);
 
-  app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
-  // app.get(`${host_url}tests`, ((_, res: any) => res.send('OIOI')))
+  // app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
+  app.get(`${host_url}`, ((_, res: any) => res.send('OIOI')))
 
   app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
