@@ -80,16 +80,16 @@ const main = async () => {
   app.post(`${host_url}users/create`, UserController.createUser);
   app.post(`${host_url}users/log_in`, UserController.login);
 
-  app.post(`${host_url}/create`, TestController.createTest);
-  app.post(`${host_url}/testIMG`, TestController.imgSaving);
+  app.post(`${host_url}create`, TestController.createTest);
+  app.post(`${host_url}testIMG`, TestController.imgSaving);
   app.post(
-    `${host_url}/toggleTestActiveState`,
+    `${host_url}toggleTestActiveState`,
     TestController.toggleTestActiveState
   );
-  app.get(`${host_url}/getTest`, TestController.getTestsByActiveParam);
-  app.get(`${host_url}/getTestByID`, TestController.getTestByID);
-  app.get(`${host_url}/allTests`, TestController.getAllTests);
-  app.get(`${host_url}/deleteTestByID`, TestController.deleteTestByID);
+  app.get(`${host_url}getTest`, TestController.getTestsByActiveParam);
+  app.get(`${host_url}getTestByID`, TestController.getTestByID);
+  app.get(`${host_url}allTests`, TestController.getAllTests);
+  app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
 
   // app.post(`/imgSaving`, TestController.saveIMG);
   app.post(`${host_url}testimg`, upload.single(`image`), TestController.testFile);

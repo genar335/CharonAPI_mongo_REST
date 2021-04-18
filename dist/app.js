@@ -68,13 +68,13 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const host_url = '/api/quiz/';
     app.post(`${host_url}users/create`, UserController.createUser);
     app.post(`${host_url}users/log_in`, UserController.login);
-    app.post(`${host_url}/create`, TestController.createTest);
-    app.post(`${host_url}/testIMG`, TestController.imgSaving);
-    app.post(`${host_url}/toggleTestActiveState`, TestController.toggleTestActiveState);
-    app.get(`${host_url}/getTest`, TestController.getTestsByActiveParam);
-    app.get(`${host_url}/getTestByID`, TestController.getTestByID);
-    app.get(`${host_url}/allTests`, TestController.getAllTests);
-    app.get(`${host_url}/deleteTestByID`, TestController.deleteTestByID);
+    app.post(`${host_url}create`, TestController.createTest);
+    app.post(`${host_url}testIMG`, TestController.imgSaving);
+    app.post(`${host_url}toggleTestActiveState`, TestController.toggleTestActiveState);
+    app.get(`${host_url}getTest`, TestController.getTestsByActiveParam);
+    app.get(`${host_url}getTestByID`, TestController.getTestByID);
+    app.get(`${host_url}allTests`, TestController.getAllTests);
+    app.get(`${host_url}deleteTestByID`, TestController.deleteTestByID);
     app.post(`${host_url}testimg`, exports.upload.single(`image`), TestController.testFile);
     app.get(`${host_url}`, TestController.getAllTests);
     app.listen(exports.PORT, () => {
