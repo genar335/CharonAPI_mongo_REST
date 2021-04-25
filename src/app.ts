@@ -60,7 +60,8 @@ const main = async () => {
   // });
 
   // app.use(fileUpload());
-  app.use(express.static(path.join(__dirname, `public`)));
+  // app.use(express.static(path.join(__dirname, `public`)));
+  app.use('/api/quiz/static', express.static(path.join(__dirname, 'public')))
   console.log(express.static(path.join(__dirname, `public`)))
   //* Routes configuration
   // app.all('*', function(req,res){ res.send(200, req.originalUrl) });

@@ -209,6 +209,6 @@ export const testFile = (req: Request, res: Response, _: any) => {
 
   // console.log(req.file);
   // res.send(req.file)
-  res.send(`http://${HOST}/uploads/${req.file.originalname}`);
+  res.send(`http://${HOST}/static/uploads/${req.file.originalname}`);
   res.send("hello")
 };

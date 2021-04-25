@@ -177,7 +177,7 @@ exports.HOST = `modesmuzejs.lv/api/quiz`;
 const testFile = (req, res, _) => {
     console.log(req.body);
     console.log(req.file);
-    res.send(`http://${exports.HOST}/uploads/${req.file.originalname}`);
+    res.send(`http://${exports.HOST}/static/uploads/${req.file.originalname}`);
     res.send("hello");
 };
 exports.testFile = testFile;
