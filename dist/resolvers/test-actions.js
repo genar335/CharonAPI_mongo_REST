@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.testFile = exports.deleteTestByID = exports.getTestByID = exports.toggleTestActiveState = exports.getAllTests = exports.imgSaving = exports.saveIMG = exports.getTestsByActiveParam = exports.createTest = void 0;
+exports.testFile = exports.HOST = exports.deleteTestByID = exports.getTestByID = exports.toggleTestActiveState = exports.getAllTests = exports.imgSaving = exports.saveIMG = exports.getTestsByActiveParam = exports.createTest = void 0;
 const test_1 = __importDefault(require("../entities/test"));
 const fs_1 = __importDefault(require("fs"));
 const app_1 = require("../app");
@@ -173,10 +173,12 @@ function dataURICoversion(qORa, whatToChange, index, pageIndex) {
     fs_1.default.writeFileSync(`dist/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`, buffer);
     qORa[whatToChange] = `http://localhost:${app_1.PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
 }
+exports.HOST = `modesmuzejs.lv/api/quiz`;
 const testFile = (req, res, _) => {
     console.log(req.body);
-    console.log(req.file.originalname);
-    res.send(`http://192.168.8.100:${app_1.PORT}/uploads/${req.file.originalname}`);
+    console.log(req.file);
+    res.send(`http://${exports.HOST}/uploads/${req.file.originalname}`);
+    res.send("hello");
 };
 exports.testFile = testFile;
 //# sourceMappingURL=test-actions.js.map

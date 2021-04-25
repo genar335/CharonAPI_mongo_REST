@@ -2,7 +2,7 @@ import Test, { IPageV2, ITest } from "../entities/test";
 
 import { Request, Response } from "express";
 import fs from "fs";
-import { PORT } from "../app";
+import { host_url, PORT } from "../app";
 
 export const createTest = async (
   req: Request,
@@ -200,9 +200,15 @@ function dataURICoversion(
   ] = `http://localhost:${PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
 }
 
+export const HOST: string = `modesmuzejs.lv/api/quiz`
+
 export const testFile = (req: Request, res: Response, _: any) => {
+
   console.log(req.body);
-  console.log(req.file.originalname);
+  console.log(req.file)
+
+  // console.log(req.file);
   // res.send(req.file)
-  res.send(`http://192.168.8.100:${PORT}/uploads/${req.file.originalname}`);
+  res.send(`http://${HOST}/uploads/${req.file.originalname}`);
+  res.send("hello")
 };

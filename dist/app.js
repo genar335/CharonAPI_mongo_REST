@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.upload = exports.PORT = void 0;
+exports.upload = exports.PORT = exports.host_url = void 0;
 const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const mongoose_1 = __importDefault(require("mongoose"));
@@ -41,6 +41,7 @@ const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const morgan_1 = __importDefault(require("morgan"));
+exports.host_url = '/api/quiz/';
 const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
 exports.PORT = process.env.PORT || 4000;
 exports.upload = multer_1.default({
@@ -67,22 +68,21 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
     app.use(cors_1.default({
-        origin: 'https://vigilant-torvalds-39724e.netlify.app',
+        origin: '*'
     }));
     app.use(express_1.default.static(path_1.default.join(__dirname, `public`)));
-    const host_url = '/api/quiz/';
-    app.post(`${host_url}users/create`, UserController.createUser);
-    app.get(`${host_url}users/login`, ((req, res) => res.send(req.originalUrl)));
-    app.post(`${host_url}tests/create`, TestController.createTest);
-    app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
-    app.post(`${host_url}tests/toggleTestActiveState`, TestController.toggleTestActiveState);
-    app.get(`${host_url}tests/getTest`, TestController.getTestsByActiveParam);
-    app.get(`${host_url}tests/getTestByID`, TestController.getTestByID);
-    app.get(`${host_url}tests/allTests`, TestController.getAllTests);
-    app.get(`${host_url}tests/deleteTestByID`, TestController.deleteTestByID);
-    app.post(`${host_url}tests/testimg`, exports.upload.single(`image`), TestController.testFile);
-    app.get(`${host_url}`, ((req, res) => res.send("Hello, there")));
-    app.use(function (req, res, next) {
+    console.log(express_1.default.static(path_1.default.join(__dirname, `public`)));
+    app.post(`${exports.host_url}users/create`, UserController.createUser);
+    app.get(`${exports.host_url}users/login`, ((req, res) => res.send(req.originalUrl)));
+    app.post(`${exports.host_url}tests/create`, TestController.createTest);
+    app.post(`${exports.host_url}tests/toggleTestActiveState`, TestController.toggleTestActiveState);
+    app.get(`${exports.host_url}tests/getTest`, TestController.getTestsByActiveParam);
+    app.get(`${exports.host_url}tests/getTestByID`, TestController.getTestByID);
+    app.get(`${exports.host_url}tests/allTests`, TestController.getAllTests);
+    app.get(`${exports.host_url}tests/deleteTestByID`, TestController.deleteTestByID);
+    app.post(`${exports.host_url}tests/testimg`, exports.upload.single(`image`), TestController.testFile);
+    app.get(`${exports.host_url}`, ((_, res) => res.send("Hello, there")));
+    app.use(function (_, res, __) {
         res.status(404).send("Sorry can't find that!");
     });
     app.listen(exports.PORT, () => {

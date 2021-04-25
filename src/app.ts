@@ -16,6 +16,7 @@ import path from "path";
 import fs from "fs";
 import morgan from "morgan";
 
+export const host_url: string = '/api/quiz/';
 const mongoDBConnectionURI = 
 `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`
 
@@ -49,8 +50,8 @@ const main = async () => {
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));
   app.use(cors({
-    origin: 'https://vigilant-torvalds-39724e.netlify.app',
-    
+    // origin: 'https://vigilant-torvalds-39724e.netlify.app',
+    origin: '*'
   }))
   // app.use(function(req, res, next) {
   //   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -60,17 +61,16 @@ const main = async () => {
 
   // app.use(fileUpload());
   app.use(express.static(path.join(__dirname, `public`)));
-
+  console.log(express.static(path.join(__dirname, `public`)))
   //* Routes configuration
   // app.all('*', function(req,res){ res.send(200, req.originalUrl) });
-    const host_url: string = '/api/quiz/';
 
   app.post(`${host_url}users/create`, UserController.createUser);
   // app.post(`${host_url}users/log_in`, UserController.login);
   app.get(`${host_url}users/login`, ((req: express.Request, res: express.Response) => res.send(req.originalUrl)))
 
   app.post(`${host_url}tests/create`, TestController.createTest);
-  app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
+  // app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
   app.post(
     `${host_url}tests/toggleTestActiveState`,
     TestController.toggleTestActiveState
@@ -84,9 +84,9 @@ const main = async () => {
   app.post(`${host_url}tests/testimg`, upload.single(`image`), TestController.testFile);
 
   // app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
-  app.get(`${host_url}`, ((req: express.Request, res: express.Response) => res.send("Hello, there")))
+  app.get(`${host_url}`, ((_: express.Request, res: express.Response) => res.send("Hello, there")))
 
-  app.use(function (req, res, next) {
+  app.use(function (_, res, __) {
     res.status(404).send("Sorry can't find that!")
   })
 
