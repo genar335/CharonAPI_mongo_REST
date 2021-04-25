@@ -84,7 +84,7 @@ const main = async () => {
   app.post(`${host_url}tests/testimg`, upload.single(`image`), TestController.testFile);
 
   // app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
-  app.get(`${host_url}`, ((req: express.Request, res: express.Response) => res.send("Hello there")))
+  app.get(`${host_url}`, ((req: express.Request, res: express.Response) => res.send("Hello, there")))
 
   app.use(function (req, res, next) {
     res.status(404).send("Sorry can't find that!")

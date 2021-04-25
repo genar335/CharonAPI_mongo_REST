@@ -81,7 +81,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get(`${host_url}tests/allTests`, TestController.getAllTests);
     app.get(`${host_url}tests/deleteTestByID`, TestController.deleteTestByID);
     app.post(`${host_url}tests/testimg`, exports.upload.single(`image`), TestController.testFile);
-    app.get(`${host_url}`, ((req, res) => res.json(req)));
+    app.get(`${host_url}`, ((req, res) => res.send("Hello, there")));
     app.use(function (req, res, next) {
         res.status(404).send("Sorry can't find that!");
     });

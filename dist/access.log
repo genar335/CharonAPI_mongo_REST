@@ -1,0 +1,3 @@
+[0mGET /api/quiz [31m500[0m 5.186 ms - 2499[0m
+[0mGET /api/quiz [32m200[0m 5.098 ms - 12[0m
+[0mGET /api/quiz/tests/allTests [32m200[0m 58.922 ms - 2726[0m
