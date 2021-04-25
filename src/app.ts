@@ -50,8 +50,8 @@ const main = async () => {
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));
   app.use(cors({
-    // origin: 'https://vigilant-torvalds-39724e.netlify.app',
-    origin: '*'
+    origin: 'https://vigilant-torvalds-39724e.netlify.app',
+    // origin: '*'
   }))
   // app.use(function(req, res, next) {
   //   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from

@@ -51,3 +51,4 @@
 [0mGET /api/quiz/static/uploads/image.txt [33m404[0m 1.164 ms - 22[0m
 [0mGET /api/quiz/static/uploads/image.txt [32m200[0m 3.990 ms - 5[0m
 [0mGET /api/quiz/static/uploads/image.txt [36m304[0m 1.136 ms - -[0m
+[0mGET /api/quiz/static/uploads/image.txt [36m304[0m 3.485 ms - -[0m
