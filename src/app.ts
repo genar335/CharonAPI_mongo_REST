@@ -51,6 +51,7 @@ const main = async () => {
   app.use(express.urlencoded({ limit: `50mb` }));
   app.use(cors({
     origin: 'https://vigilant-torvalds-39724e.netlify.app',
+    credentials: true
     // origin: '*'
   }))
   // app.use(function(req, res, next) {
@@ -67,11 +68,10 @@ const main = async () => {
   // app.all('*', function(req,res){ res.send(200, req.originalUrl) });
 
   app.post(`${host_url}users/create`, UserController.createUser);
-  // app.post(`${host_url}users/log_in`, UserController.login);
-  app.get(`${host_url}users/login`, ((req: express.Request, res: express.Response) => res.send(req.originalUrl)))
+  app.post(`${host_url}users/log_in`, UserController.login);
+  // app.get(`${host_url}users/login`, ((req: express.Request, res: express.Response) => res.send(req.originalUrl)))
 
   app.post(`${host_url}tests/create`, TestController.createTest);
-  // app.post(`${host_url}tests/testIMG`, TestController.imgSaving);
   app.post(
     `${host_url}tests/toggleTestActiveState`,
     TestController.toggleTestActiveState

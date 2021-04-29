@@ -52,3 +52,12 @@
 [0mGET /api/quiz/static/uploads/image.txt [32m200[0m 3.990 ms - 5[0m
 [0mGET /api/quiz/static/uploads/image.txt [36m304[0m 1.136 ms - -[0m
 [0mGET /api/quiz/static/uploads/image.txt [36m304[0m 3.485 ms - -[0m
+[0mPOST /api/quiz/tests/testimg [32m200[0m 13.901 ms - 58[0m
+[0mPOST /api/quiz/tests/testimg [32m200[0m 5.985 ms - 63[0m
+[0mPOST /api/quiz/tests/testimg [32m200[0m 5.714 ms - 63[0m
+[0mPOST /api/quiz/tests/testimg [32m200[0m 3.333 ms - 58[0m
+[0mPOST /api/quiz/tests/testimg [32m200[0m 2.428 ms - 63[0m
+[0mPOST /api/quiz/tests/testimg [32m200[0m 2.767 ms - 63[0m
+[0mPOST /api/quiz/tests/testimg [32m200[0m 3.509 ms - 83[0m
+[0mPOST /api/quiz/tests/testimg [32m200[0m 3.418 ms - 63[0m
+[0mGET /api/quiz/static/uploads/image.txt [36m304[0m 2.549 ms - -[0m
