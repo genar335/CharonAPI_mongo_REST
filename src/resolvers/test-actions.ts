@@ -2,7 +2,7 @@ import Test, { IPageV2, ITest } from "../entities/test";
 
 import { Request, Response } from "express";
 import fs from "fs";
-import { host_url, PORT } from "../app";
+import { PORT } from "../app";
 
 export const createTest = async (
   req: Request,

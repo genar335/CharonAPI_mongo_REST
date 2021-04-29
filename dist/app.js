@@ -69,11 +69,12 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
     app.use(cors_1.default({
         origin: 'https://vigilant-torvalds-39724e.netlify.app',
+        credentials: true
     }));
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
     console.log(express_1.default.static(path_1.default.join(__dirname, `public`)));
     app.post(`${exports.host_url}users/create`, UserController.createUser);
-    app.get(`${exports.host_url}users/login`, ((req, res) => res.send(req.originalUrl)));
+    app.post(`${exports.host_url}users/log_in`, UserController.login);
     app.post(`${exports.host_url}tests/create`, TestController.createTest);
     app.post(`${exports.host_url}tests/toggleTestActiveState`, TestController.toggleTestActiveState);
     app.get(`${exports.host_url}tests/getTest`, TestController.getTestsByActiveParam);
