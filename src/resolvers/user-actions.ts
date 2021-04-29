@@ -49,7 +49,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       if (await bcrypt.compare(password, user.password)) {
         //* Setting a cookei with the user id
         req.session!.userID = user._id;
-        res.send(user);
+        // res.send(user);
+        res.cookie('user', `${user.name}`, { maxAge: 15778476000 }).send("Logged in!")
       } else {
         res.send("Wrong password");
       }

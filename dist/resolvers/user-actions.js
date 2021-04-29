@@ -39,7 +39,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (user !== null) {
             if (yield bcrypt_1.default.compare(password, user.password)) {
                 req.session.userID = user._id;
-                res.send(user);
+                res.cookie('user', `${user.name}`, { maxAge: 15778476000 }).send("Logged in!");
             }
             else {
                 res.send("Wrong password");
