@@ -68,11 +68,11 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log(__dirname);
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
-    app.use(cookie_parser_1.default());
     app.use(cors_1.default({
         origin: 'https://vigilant-torvalds-39724e.netlify.app',
         credentials: true
     }));
+    app.use(cookie_parser_1.default());
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
     console.log(express_1.default.static(path_1.default.join(__dirname, `public`)));
     app.post(`${exports.host_url}users/create`, UserController.createUser);
