@@ -41,6 +41,7 @@ const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const morgan_1 = __importDefault(require("morgan"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 exports.host_url = '/api/quiz/';
 const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
 exports.PORT = process.env.PORT || 4000;
@@ -67,6 +68,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log(__dirname);
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
+    app.use(cookie_parser_1.default());
     app.use(cors_1.default({
         origin: 'https://vigilant-torvalds-39724e.netlify.app',
         credentials: true
