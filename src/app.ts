@@ -15,6 +15,7 @@ import cors from "cors";
 import path from "path";
 import fs from "fs";
 import morgan from "morgan";
+import cookieParser from 'cookie-parser';
 
 export const host_url: string = '/api/quiz/';
 const mongoDBConnectionURI = 
@@ -49,6 +50,7 @@ const main = async () => {
 
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));
+  app.use(cookieParser());
   app.use(cors({
     origin: 'https://vigilant-torvalds-39724e.netlify.app',
     credentials: true

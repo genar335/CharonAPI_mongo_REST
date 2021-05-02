@@ -36,9 +36,9 @@ export const createUser = async (
  */
 export const login = async (req: Request, res: Response): Promise<void> => {
   //* Checking whether the user has already logged in
-  if (req.session!.userID) {
-    res.send("Already logged in!");
-  } else {
+  // if (req.session!.userID) {
+    // res.send("Already logged in!");
+  // } else {
     const { name, password } = req.body;
     if ((name || password) < 0) {
       res.send("Error");
@@ -57,5 +57,5 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     } else {
       res.send("Wrong username");
     }
-  }
+  // }
 };
