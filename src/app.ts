@@ -31,6 +31,7 @@ export const upload = multer({
   }),
 });
 
+const clientHost = 'https://vigilant-torvalds-39724e.netlify.app';
 const main = async () => {
   const app = express();
   try {
@@ -51,7 +52,7 @@ const main = async () => {
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));
   app.use(cors({
-    origin: 'https://vigilant-torvalds-39724e.netlify.app',
+    origin: clientHost,
     credentials: true,
     // origin: '*'
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -63,6 +64,14 @@ const main = async () => {
   //   res.header("Access-Control-Allow-Credentials", "true")
   //   next();
   // });
+
+  app.use(function (req, res, next) {
+    console.log('Time:', Date.now());
+    if (!req.cookies.user) {
+      res.redirect(`${clientHost}/tms/auth`)
+    } 
+    next();
+  })
 
   // app.use(fileUpload());
   // app.use(express.static(path.join(__dirname, `public`)));

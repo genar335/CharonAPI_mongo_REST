@@ -51,6 +51,7 @@ exports.upload = multer_1.default({
         filename: (_req, file, cb) => cb(null, `${file.originalname}`),
     }),
 });
+const clientHost = 'https://vigilant-torvalds-39724e.netlify.app';
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     try {
@@ -69,11 +70,18 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
     app.use(cors_1.default({
-        origin: 'https://vigilant-torvalds-39724e.netlify.app',
+        origin: clientHost,
         credentials: true,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     }));
     app.use(cookie_parser_1.default());
+    app.use(function (req, res, next) {
+        console.log('Time:', Date.now());
+        if (!req.cookies.user) {
+            res.redirect(`${clientHost}/tms/auth`);
+        }
+        next();
+    });
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
     console.log(express_1.default.static(path_1.default.join(__dirname, `public`)));
     app.post(`${exports.host_url}users/create`, UserController.createUser);
