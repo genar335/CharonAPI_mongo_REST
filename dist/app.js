@@ -71,6 +71,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "https://vigilant-torvalds-39724e.netlify.app");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Access-Control-Allow-Credentials", "true");
         next();
     });
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
