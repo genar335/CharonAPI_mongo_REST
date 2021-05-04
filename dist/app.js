@@ -41,6 +41,7 @@ const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const morgan_1 = __importDefault(require("morgan"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 exports.host_url = '/api/quiz/';
 const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
 exports.PORT = process.env.PORT || 4000;
@@ -72,6 +73,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         credentials: true,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     }));
+    app.use(cookie_parser_1.default());
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
     console.log(express_1.default.static(path_1.default.join(__dirname, `public`)));
     app.post(`${exports.host_url}users/create`, UserController.createUser);
