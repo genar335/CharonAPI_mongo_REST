@@ -54,6 +54,7 @@ const main = async () => {
     origin: 'https://vigilant-torvalds-39724e.netlify.app',
     credentials: true,
     // origin: '*'
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   }))
   app.use(cookieParser());
   // app.use(function(req, res, next) {
