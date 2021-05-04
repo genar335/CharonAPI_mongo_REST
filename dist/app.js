@@ -69,7 +69,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
     app.use(cookie_parser_1.default());
     app.use(function (req, res, next) {
-        res.header("Access-Control-Allow-Origin", "http://vigilant-torvalds-39724e.netlify.app");
+        res.header("Access-Control-Allow-Origin", "https://vigilant-torvalds-39724e.netlify.app");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
