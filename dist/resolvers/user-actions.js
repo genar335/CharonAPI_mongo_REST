@@ -26,7 +26,24 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.send(newUser);
 });
 exports.createUser = createUser;
-const login = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name, password } = req.body;
+    res.send("Hello");
+    if ((name || password) < 0) {
+        res.send("Error");
+    }
+    const user = yield user_1.default.findOne({ name: name });
+    if (user !== null) {
+        if (yield bcrypt_1.default.compare(password, user.password)) {
+            res.cookie('user', `${user.name}`, { maxAge: 15778476000 }).send("Logged in!");
+        }
+        else {
+            res.send("Wrong password");
+        }
+    }
+    else {
+        res.send("Wrong username");
+    }
     res.send("Recived smth");
 });
 exports.login = login;
