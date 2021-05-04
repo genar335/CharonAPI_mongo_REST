@@ -29,6 +29,8 @@ export const createUser = async (
   res.send(newUser);
 };
 
+
+
 /**
  * Logs the user in and checks whether the user has logged in before, as well as sets a cookie.
  * @param req - incoming request from the TMS.
@@ -58,7 +60,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     // } else {
     //   res.send("Wrong username");
     // }
-    res.cookie('test', `testst`);
+    res.cookie('test', `testst`, {secure: true});
     res.send("Cookie?")
     // res.send("Recived smth")
 };
