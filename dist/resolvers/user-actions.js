@@ -28,6 +28,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.createUser = createUser;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, password } = req.body;
+    res.send("Hello");
     if ((name || password) < 0) {
         res.send("Error");
     }

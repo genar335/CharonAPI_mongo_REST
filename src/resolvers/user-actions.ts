@@ -40,6 +40,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     // res.send("Already logged in!");
   // } else {
     const { name, password } = req.body;
+    res.send("Hello")
     if ((name || password) < 0) {
       res.send("Error");
     }
