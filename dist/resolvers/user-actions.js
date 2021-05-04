@@ -34,7 +34,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_1.default.findOne({ name: name });
     if (user !== null) {
         if (yield bcrypt_1.default.compare(password, user.password)) {
-            res.cookie('user', `${user.name}`, { maxAge: 15778476000, secure: false, sameSite: 'none', httpOnly: false }).send("Logged in!");
+            res.cookie('user', `${user.name}`, { maxAge: 15778476000, secure: true, sameSite: 'none', httpOnly: true }).send("Logged in!");
         }
         else {
             res.send("Wrong password");

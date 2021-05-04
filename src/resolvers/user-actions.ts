@@ -53,7 +53,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         //* Setting a cookei with the user id
         // req.session!.userID = user._id;
         // res.send(user);
-        res.cookie('user', `${user.name}`, { maxAge: 15778476000, secure: false, sameSite: 'none', httpOnly: false }).send("Logged in!")
+        res.cookie('user', `${user.name}`, { maxAge: 15778476000, secure: true, sameSite: 'none', httpOnly: true }).send("Logged in!")
       } else {
         res.send("Wrong password");
       }
