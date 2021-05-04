@@ -50,17 +50,17 @@ const main = async () => {
 
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));
-  app.use(cors({
-    // origin: 'https://vigilant-torvalds-39724e.netlify.app',
-    credentials: true,
-    origin: '*'
-  }))
+  // app.use(cors({
+  //   origin: 'https://vigilant-torvalds-39724e.netlify.app',
+  //   credentials: true,
+  //   // origin: '*'
+  // }))
   app.use(cookieParser());
-  // app.use(function(req, res, next) {
-  //   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  //   next();
-  // });
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://vigilant-torvalds-39724e.netlify.app"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
   // app.use(fileUpload());
   // app.use(express.static(path.join(__dirname, `public`)));

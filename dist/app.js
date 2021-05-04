@@ -37,7 +37,6 @@ const multer_1 = __importDefault(require("multer"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const UserController = __importStar(require("./resolvers/user-actions"));
 const TestController = __importStar(require("./resolvers/test-actions"));
-const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const morgan_1 = __importDefault(require("morgan"));
@@ -68,11 +67,12 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log(__dirname);
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
-    app.use(cors_1.default({
-        credentials: true,
-        origin: '*'
-    }));
     app.use(cookie_parser_1.default());
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "http://vigilant-torvalds-39724e.netlify.app");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
     console.log(express_1.default.static(path_1.default.join(__dirname, `public`)));
     app.post(`${exports.host_url}users/create`, UserController.createUser);
