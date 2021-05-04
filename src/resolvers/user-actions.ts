@@ -58,6 +58,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     // } else {
     //   res.send("Wrong username");
     // }
-    res.cookie('test', `${req.body.name}`).send("A cookie?");
+    res.cookie('test', `testst`).send("A cookie?");
     // res.send("Recived smth")
 };

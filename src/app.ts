@@ -15,7 +15,7 @@ import cors from "cors";
 import path from "path";
 import fs from "fs";
 import morgan from "morgan";
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
 
 export const host_url: string = '/api/quiz/';
 const mongoDBConnectionURI = 
@@ -56,7 +56,7 @@ const main = async () => {
     // origin: '*'
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   }))
-  app.use(cookieParser());
+  // app.use(cookieParser());
   // app.use(function(req, res, next) {
   //   res.header("Access-Control-Allow-Origin", "https://vigilant-torvalds-39724e.netlify.app"); // update to match the domain you will make the request from
   //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
