@@ -28,6 +28,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.createUser = createUser;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.cookie('test', `testst`);
+    res.send("Cookie?");
 });
 exports.login = login;
 //# sourceMappingURL=user-actions.js.map
