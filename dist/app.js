@@ -77,10 +77,12 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(cookie_parser_1.default());
     app.use(function (req, res, next) {
         console.log('Time:', Date.now());
-        if (req.cookies.user.length > 0) {
+        if (req.cookies.user.length === 'admin') {
             res.send(req.cookies.user);
         }
-        res.send(req.cookies);
+        else {
+            res.redirect(`${clientHost}/tms/auth`);
+        }
         next();
     });
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));

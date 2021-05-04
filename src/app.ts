@@ -69,11 +69,15 @@ const main = async () => {
   app.use(function (req, res, next) {
     console.log('Time:', Date.now());
     
-    if (req.cookies.user.length > 0) {
+    if (req.cookies.user.length === 'admin') {
       res.send(req.cookies.user);
+    } else {
+
+      
+      res.redirect(`${clientHost}/tms/auth`)
     }
 
-    res.send(req.cookies);
+
     next();
 
   })
