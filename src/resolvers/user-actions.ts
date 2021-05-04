@@ -41,22 +41,22 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   // } else {
     const { name, password } = req.body;
     res.send("Hello")
-    if ((name || password) < 0) {
-      res.send("Error");
-    }
-    //* Finding user
-    const user: IUser | null = await User.findOne({ name: name });
-    if (user !== null) {
-      if (await bcrypt.compare(password, user.password)) {
-        //* Setting a cookei with the user id
-        req.session!.userID = user._id;
-        // res.send(user);
-        res.cookie('user', `${user.name}`, { maxAge: 15778476000 }).send("Logged in!")
-      } else {
-        res.send("Wrong password");
-      }
-    } else {
-      res.send("Wrong username");
-    }
+    // if ((name || password) < 0) {
+    //   res.send("Error");
+    // }
+    // //* Finding user
+    // const user: IUser | null = await User.findOne({ name: name });
+    // if (user !== null) {
+    //   if (await bcrypt.compare(password, user.password)) {
+    //     //* Setting a cookei with the user id
+    //     req.session!.userID = user._id;
+    //     // res.send(user);
+    //     res.cookie('user', `${user.name}`, { maxAge: 15778476000 }).send("Logged in!")
+    //   } else {
+    //     res.send("Wrong password");
+    //   }
+    // } else {
+    //   res.send("Wrong username");
+    // }
   // }
 };
