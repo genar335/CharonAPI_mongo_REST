@@ -68,7 +68,7 @@ const main = async () => {
   app.use(function (req, res, next) {
     console.log('Time:', Date.now());
     if (!req.cookies.user) {
-      res.redirect(`${clientHost}/tms/auth`)
+      res.send("No cookie:(")
     } 
     next();
   })
