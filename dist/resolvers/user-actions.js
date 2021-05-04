@@ -27,7 +27,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createUser = createUser;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.cookie('test', `testst`, { secure: true });
+    res.cookie('test', `testst`, { secure: true, sameSite: 'none' });
     res.send("Cookie?");
 });
 exports.login = login;

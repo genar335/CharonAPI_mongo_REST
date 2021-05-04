@@ -60,7 +60,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     // } else {
     //   res.send("Wrong username");
     // }
-    res.cookie('test', `testst`, {secure: true});
+    res.cookie('test', `testst`, {secure: true, sameSite: 'none'});
     res.send("Cookie?")
     // res.send("Recived smth")
 };
