@@ -36,7 +36,7 @@ export const createUser = async (
  * @param req - incoming request from the TMS.
  * @param res - info regarding the operation state.
  */
-export const login = async (req: Request, res: Response): Promise<void> => {
+export const login = async (_: Request, res: Response): Promise<void> => {
   //* Checking whether the user has already logged in
   // if (req.session!.userID) {
     // res.send("Already logged in!");
