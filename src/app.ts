@@ -68,8 +68,14 @@ const main = async () => {
 
   app.use(function (req, res, next) {
     console.log('Time:', Date.now());
+    
+    if (req.cookies.user.length > 0) {
+      res.send(req.cookies.user);
+    }
+
     res.send(req.cookies);
     next();
+
   })
 
   // app.use(fileUpload());

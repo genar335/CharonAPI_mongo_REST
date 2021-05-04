@@ -77,6 +77,9 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(cookie_parser_1.default());
     app.use(function (req, res, next) {
         console.log('Time:', Date.now());
+        if (req.cookies.user.length > 0) {
+            res.send(req.cookies.user);
+        }
         res.send(req.cookies);
         next();
     });
