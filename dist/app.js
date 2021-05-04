@@ -81,7 +81,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             res.send(req.cookies.user);
         }
         else {
-            res.redirect(`${clientHost}/tms/auth`);
+            res.clearCookie('user');
+            res.send("You are already logged in");
         }
         next();
     });

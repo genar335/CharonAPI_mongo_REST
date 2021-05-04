@@ -72,9 +72,9 @@ const main = async () => {
     if (req.cookies.user.length === 'admin') {
       res.send(req.cookies.user);
     } else {
-
-      
-      res.redirect(`${clientHost}/tms/auth`)
+      res.clearCookie('user')
+      // res.redirect(`${clientHost}/tms/auth`)
+      res.send("You are already logged in")
     }
 
 
