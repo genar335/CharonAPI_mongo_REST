@@ -56,6 +56,7 @@ const main = async () => {
     credentials: true,
     // origin: '*'
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+
   }))
   app.use(cookieParser());
   // app.use(function(req, res, next) {
