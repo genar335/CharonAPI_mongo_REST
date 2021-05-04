@@ -66,13 +66,11 @@ const main = async () => {
   //   next();
   // });
 
-  // app.use(function (req, res, next) {
-  //   console.log('Time:', Date.now());
-  //   if (!req.cookies.user) {
-  //     res.send("No cookie:(")
-  //   } 
-  //   next();
-  // })
+  app.use(function (req, res, next) {
+    console.log('Time:', Date.now());
+    res.send(req.cookies);
+    next();
+  })
 
   // app.use(fileUpload());
   // app.use(express.static(path.join(__dirname, `public`)));
