@@ -51,9 +51,9 @@ const main = async () => {
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));
   app.use(cors({
-    origin: 'https://vigilant-torvalds-39724e.netlify.app',
-    credentials: true
-    // origin: '*'
+    // origin: 'https://vigilant-torvalds-39724e.netlify.app',
+    credentials: true,
+    origin: '*'
   }))
   app.use(cookieParser());
   // app.use(function(req, res, next) {

@@ -69,8 +69,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
     app.use(cors_1.default({
-        origin: 'https://vigilant-torvalds-39724e.netlify.app',
-        credentials: true
+        credentials: true,
+        origin: '*'
     }));
     app.use(cookie_parser_1.default());
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
