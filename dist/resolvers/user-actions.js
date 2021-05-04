@@ -46,5 +46,4 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.login = login;
-;
 //# sourceMappingURL=user-actions.js.map

@@ -58,5 +58,4 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     } else {
       res.send("Wrong username");
     }
-  }
 };
