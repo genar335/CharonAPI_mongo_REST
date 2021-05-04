@@ -39,7 +39,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   // if (req.session!.userID) {
     // res.send("Already logged in!");
   // } else {
-    const { name, password } = req.body;
+    // const { name, password } = req.body;
     res.send("Hello")
     // if ((name || password) < 0) {
     //   res.send("Error");
