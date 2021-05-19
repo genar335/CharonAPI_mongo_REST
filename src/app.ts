@@ -69,7 +69,7 @@ const main = async () => {
   app.use(function (req, res, next) {
     console.log('Time:', Date.now());
     
-    if (req.cookies.user.length === 'admin') {
+    if (req.cookies.user === 'admin') {
       res.send(req.cookies.user);
     } else {
       res.clearCookie('user')
