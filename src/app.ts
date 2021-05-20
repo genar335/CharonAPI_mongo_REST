@@ -66,21 +66,21 @@ const main = async () => {
   //   next();
   // });
 
-  app.use(function (req, res, next) {
-    console.log('Time:', Date.now());
+  // app.use(function (req, res, next) {
+  //   console.log('Time:', Date.now());
     
-    if (req.cookies.user === 'admin') {
-      res.send(req.cookies.user);
-    } else {
-      res.clearCookie('user')
-      // res.redirect(`${clientHost}/tms/auth`)
-      res.send("You are already logged in")
-    }
+  //   if (req.cookies.user === 'admin') {
+  //     res.send(req.cookies.user);
+  //   } else {
+  //     res.clearCookie('user')
+  //     // res.redirect(`${clientHost}/tms/auth`)
+  //     res.send("You are already logged in")
+  //   }
 
 
-    next();
+  //   next();
 
-  })
+  // })
 
   // app.use(fileUpload());
   // app.use(express.static(path.join(__dirname, `public`)));

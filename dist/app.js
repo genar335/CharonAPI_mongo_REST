@@ -75,17 +75,6 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     }));
     app.use(cookie_parser_1.default());
-    app.use(function (req, res, next) {
-        console.log('Time:', Date.now());
-        if (req.cookies.user === 'admin') {
-            res.send(req.cookies.user);
-        }
-        else {
-            res.clearCookie('user');
-            res.send("You are already logged in");
-        }
-        next();
-    });
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
     console.log(express_1.default.static(path_1.default.join(__dirname, `public`)));
     app.post(`${exports.host_url}users/create`, UserController.createUser);
