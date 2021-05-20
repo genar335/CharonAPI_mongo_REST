@@ -2,6 +2,8 @@
 import { Request, Response } from "express";
 import User,  { IUser } from "../entities/user";
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
+import { jwtNotSoSecretSecret } from "../app";
 
 type User = {
   name: string;
@@ -53,7 +55,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         //* Setting a cookei with the user id
         // req.session!.userID = user._id;
         // res.send(user);
-        res.cookie('user', `${user.name}`, { maxAge: 15778476000, secure: true, sameSite: 'none', httpOnly: true, path: 'tms/' }).send("Logged in!")
+        // res.cookie('user', `${user.name}`, { maxAge: 15778476000, secure: true, sameSite: 'none', httpOnly: true, path: 'tms/' }).send("Logged in!")
+        const token = generateAccessToken(user.name);
+        res.json(token);
       } else {
         res.send("Wrong password");
       }
@@ -64,3 +68,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     // res.send("Cookie?")
     // res.send("Recived smth")
 };
+
+function generateAccessToken(username: IUser['name']) {
+  return jwt.sign(username, jwtNotSoSecretSecret, { expiresIn: '1800000s' });
+}

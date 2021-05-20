@@ -16,10 +16,12 @@ import path from "path";
 import fs from "fs";
 import morgan from "morgan";
 import cookieParser from 'cookie-parser';
+// import jwt from 'jsonwebtoken';
 
 export const host_url: string = '/api/quiz/';
 const mongoDBConnectionURI = 
 `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`
+export const jwtNotSoSecretSecret = 'kittykittyKat';
 
 
 export const PORT = ((process.env.PORT as unknown) as number) || 4000;

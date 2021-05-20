@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.createUser = void 0;
 const user_1 = __importDefault(require("../entities/user"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const app_1 = require("../app");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     const uPasswordHashed = yield bcrypt_1.default.hash(req.body.password, 10);
@@ -34,7 +36,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_1.default.findOne({ name: name });
     if (user !== null) {
         if (yield bcrypt_1.default.compare(password, user.password)) {
-            res.cookie('user', `${user.name}`, { maxAge: 15778476000, secure: true, sameSite: 'none', httpOnly: true, path: 'tms/' }).send("Logged in!");
+            const token = generateAccessToken(user.name);
+            res.json(token);
         }
         else {
             res.send("Wrong password");
@@ -45,4 +48,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.login = login;
+function generateAccessToken(username) {
+    return jsonwebtoken_1.default.sign(username, app_1.jwtNotSoSecretSecret, { expiresIn: '1800000s' });
+}
 //# sourceMappingURL=user-actions.js.map
