@@ -49,6 +49,6 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.login = login;
 function generateAccessToken(username) {
-    return jsonwebtoken_1.default.sign(username, app_1.jwtNotSoSecretSecret, { expiresIn: '1800000s' });
+    return jsonwebtoken_1.default.sign(username, app_1.jwtNotSoSecretSecret);
 }
 //# sourceMappingURL=user-actions.js.map

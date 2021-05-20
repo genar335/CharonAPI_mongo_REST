@@ -70,5 +70,5 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 };
 
 function generateAccessToken(username: IUser['name']) {
-  return jwt.sign(username, jwtNotSoSecretSecret, { expiresIn: '1800000s' });
+  return jwt.sign(username, jwtNotSoSecretSecret);
 }
