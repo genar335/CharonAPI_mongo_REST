@@ -56,6 +56,7 @@ const main = async () => {
     credentials: true,
     // origin: '*'
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ["set-cookie"],
   }))
   app.use(cookieParser());

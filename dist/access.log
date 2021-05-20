@@ -61,3 +61,4 @@
 [0mPOST /api/quiz/tests/testimg [32m200[0m 3.509 ms - 83[0m
 [0mPOST /api/quiz/tests/testimg [32m200[0m 3.418 ms - 63[0m
 [0mGET /api/quiz/static/uploads/image.txt [36m304[0m 2.549 ms - -[0m
+[0mPOST /api/quiz/users/log_in [32m200[0m 124.055 ms - 10[0m
