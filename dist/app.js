@@ -73,6 +73,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         origin: clientHost,
         credentials: true,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        exposedHeaders: ["set-cookie"],
     }));
     app.use(cookie_parser_1.default());
     app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
