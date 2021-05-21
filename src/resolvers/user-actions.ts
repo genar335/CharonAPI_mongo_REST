@@ -46,7 +46,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const { name, password } = req.body;
 
     if ((name || password) < 0) {
-      res.send("Error");
+      res.sendStatus(403);
     }
     //* Finding user
     const user: IUser | null = await User.findOne({ name: name });
@@ -60,10 +60,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         res.status(200).json(token);
       } else {
 
-        res.status(403).send("Wrong password");
+        // res.status(403).send("Wrong password");
+        res.sendStatus(403);
       }
     } else {
-      res.status(403).send("Wrong username");
+      // res.status(403).send("Wrong username");
+      res.sendStatus(403);
     }
     // res.cookie('test', `testst`, {secure: true, sameSite: 'none'});
     // res.send("Cookie?")

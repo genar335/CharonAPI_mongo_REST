@@ -31,7 +31,7 @@ exports.createUser = createUser;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, password } = req.body;
     if ((name || password) < 0) {
-        res.send("Error");
+        res.sendStatus(403);
     }
     const user = yield user_1.default.findOne({ name: name });
     if (user !== null) {
@@ -40,11 +40,11 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.status(200).json(token);
         }
         else {
-            res.status(403).send("Wrong password");
+            res.sendStatus(403);
         }
     }
     else {
-        res.status(403).send("Wrong username");
+        res.sendStatus(403);
     }
 });
 exports.login = login;
