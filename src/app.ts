@@ -16,7 +16,7 @@ import path from "path";
 import fs from "fs";
 import morgan from "morgan";
 import cookieParser from 'cookie-parser';
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export const host_url: string = '/api/quiz/';
 const mongoDBConnectionURI = 
@@ -50,6 +50,27 @@ const main = async () => {
   app.use(morgan('dev', { stream: accessLogStream }))
 
   console.log(__dirname);
+
+
+  function authenticateToken(req: express.Request, res: express.Response, next: any) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+  
+    if (token == null) return res.sendStatus(401)
+  
+    jwt.verify(token, process.env.TOKEN_SECRET as string, (err: any, user: any) => {
+      console.log(err)
+  
+      if (err) return res.sendStatus(403)
+  
+      // req.user = user
+  
+      next()
+    })
+  }  
+
+  app.use(authenticateToken)
+
 
   app.use(express.json({ limit: `50mb` }));
   app.use(express.urlencoded({ limit: `50mb` }));

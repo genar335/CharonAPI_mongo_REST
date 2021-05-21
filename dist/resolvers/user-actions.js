@@ -37,14 +37,14 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (user !== null) {
         if (yield bcrypt_1.default.compare(password, user.password)) {
             const token = generateAccessToken(user.name);
-            res.json(token);
+            res.status(200).json(token);
         }
         else {
-            res.send("Wrong password");
+            res.status(403).send("Wrong password");
         }
     }
     else {
-        res.send("Wrong username");
+        res.status(403).send("Wrong username");
     }
 });
 exports.login = login;

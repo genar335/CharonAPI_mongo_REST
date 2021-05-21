@@ -57,12 +57,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         // res.send(user);
         // res.cookie('user', `${user.name}`, { maxAge: 15778476000, secure: true, sameSite: 'none', httpOnly: true, path: 'tms/' }).send("Logged in!")
         const token = generateAccessToken(user.name);
-        res.json(token);
+        res.status(200).json(token);
       } else {
-        res.send("Wrong password");
+
+        res.status(403).send("Wrong password");
       }
     } else {
-      res.send("Wrong username");
+      res.status(403).send("Wrong username");
     }
     // res.cookie('test', `testst`, {secure: true, sameSite: 'none'});
     // res.send("Cookie?")
