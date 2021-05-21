@@ -80,7 +80,7 @@ const main = async () => {
     // origin: '*'
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ["set-cookie"],
+    // exposedHeaders: ["set-cookie"],
   }))
   app.use(cookieParser());
   // app.use(function(req, res, next) {
