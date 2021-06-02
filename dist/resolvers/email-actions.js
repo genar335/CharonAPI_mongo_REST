@@ -15,13 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllEmails = exports.saveEmail = void 0;
 const email_1 = __importDefault(require("../entities/email"));
 const saveEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newEmail = yield email_1.default.create({
-        email: req.body.email,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    });
-    res.status(200).send();
-    console.log(newEmail);
+    const email = req.body;
+    try {
+        const newEmail = yield email_1.default.create({
+            email: req.body.email,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        console.log(email);
+        console.log(newEmail);
+        res.status(200).send();
+    }
+    catch (error) {
+        res.send(error);
+    }
 });
 exports.saveEmail = saveEmail;
 const getAllEmails = (_, res) => {
