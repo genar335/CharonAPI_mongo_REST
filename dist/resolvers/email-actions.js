@@ -17,8 +17,8 @@ const email_1 = __importDefault(require("../entities/email"));
 const saveEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newEmail = yield email_1.default.create({
         email: req.body.email,
-        createdAt: new Date,
-        updatedAt: new Date
+        createdAt: new Date(),
+        updatedAt: new Date()
     });
     res.status(200).send();
     console.log(newEmail);

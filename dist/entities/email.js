@@ -7,8 +7,13 @@ exports.EmailSchema = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 exports.EmailSchema = new mongoose_1.default.Schema({
     email: { type: String, required: true, unique: true },
-    createdAt: new Date,
-    updatedAt: new Date
+    createdAt: {
+        type: Date, default: new Date()
+    },
+    updatedAt: {
+        type: Date,
+        default: new Date()
+    }
 });
 const Email = mongoose_1.default.model("Email", exports.EmailSchema);
 exports.default = Email;
