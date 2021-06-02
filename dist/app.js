@@ -37,6 +37,7 @@ const multer_1 = __importDefault(require("multer"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const UserController = __importStar(require("./resolvers/user-actions"));
 const TestController = __importStar(require("./resolvers/test-actions"));
+const EmailController = __importStar(require("./resolvers/email-actions"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
@@ -100,6 +101,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get(`${exports.host_url}tests/deleteTestByID`, TestController.deleteTestByID);
     app.post(`${exports.host_url}tests/testimg`, exports.upload.single(`image`), TestController.testFile);
     app.get(`${exports.host_url}`, ((_, res) => res.send("Hello, there")));
+    app.post(`${exports.host_url}/email`, EmailController.saveEmail);
     app.use(function (_, res, __) {
         res.status(404).send("Sorry can't find that!");
     });
