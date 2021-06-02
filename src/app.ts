@@ -135,7 +135,7 @@ const main = async () => {
   app.get(`${host_url}`, ((_: express.Request, res: express.Response) => res.send("Hello, there")))
 
 
-    app.post(`${host_url}/email`, EmailController.saveEmail)
+    app.post(`${host_url}email`, EmailController.saveEmail)
 
   app.use(function (_, res, __) {
     res.status(404).send("Sorry can't find that!")
