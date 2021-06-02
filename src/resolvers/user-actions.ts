@@ -72,6 +72,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     // res.send("Recived smth")
 };
 
+
+
 function generateAccessToken(username: IUser['name']) {
   return jwt.sign(username, jwtNotSoSecretSecret);
 }
