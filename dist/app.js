@@ -42,7 +42,6 @@ const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const morgan_1 = __importDefault(require("morgan"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.host_url = '/api/quiz/';
 const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
 exports.jwtNotSoSecretSecret = 'kittykittyKat';
@@ -69,18 +68,6 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     let accessLogStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, 'access.log'), { flags: 'a' });
     app.use(morgan_1.default('dev', { stream: accessLogStream }));
     console.log(__dirname);
-    function authenticateToken(req, res, next) {
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        if (token == null)
-            return res.sendStatus(401);
-        jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-            console.log(err);
-            if (err)
-                return res.sendStatus(403);
-            next();
-        });
-    }
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
     app.use(cors_1.default({

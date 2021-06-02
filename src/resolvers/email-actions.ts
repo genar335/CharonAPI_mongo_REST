@@ -1,4 +1,3 @@
-import { signedCookie } from "cookie-parser";
 import { Request, Response } from "express";
 import Email, { IEmail } from '../entities/email';
 
