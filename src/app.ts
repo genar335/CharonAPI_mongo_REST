@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 // import * as dotenv from "dotenv";
 import * as UserController from "./resolvers/user-actions";
 import * as TestController from "./resolvers/test-actions";
+import * as EmailController from './resolvers/email-actions';
 // import bodyParser from "body-parser";
 // import session from "express-session";
 import cors from "cors";
@@ -132,6 +133,9 @@ const main = async () => {
 
   // app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
   app.get(`${host_url}`, ((_: express.Request, res: express.Response) => res.send("Hello, there")))
+
+
+    app.post(`${host_url}/email`, EmailController.saveEmail)
 
   app.use(function (_, res, __) {
     res.status(404).send("Sorry can't find that!")
