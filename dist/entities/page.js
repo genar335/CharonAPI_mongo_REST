@@ -31,4 +31,4 @@ exports.PageSchema = new mongoose_1.default.Schema({
 });
 const Page = mongoose_1.model("Page", exports.PageSchema);
 exports.default = Page;
-//# sourceMappingURL=page.js.map
+//# sourceMappingURL=Page.js.map
