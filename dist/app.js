@@ -42,9 +42,9 @@ const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const morgan_1 = __importDefault(require("morgan"));
-exports.host_url = '/api/quiz/';
+exports.host_url = "/api/quiz/";
 const mongoDBConnectionURI = `mongodb+srv://db_admin:INUTcbXenaioaF6F@cluster0.dgurj.mongodb.net/quiz_db?retryWrites=true&w=majority`;
-exports.jwtNotSoSecretSecret = 'kittykittyKat';
+exports.jwtNotSoSecretSecret = "kittykittyKat";
 exports.PORT = process.env.PORT || 4000;
 exports.upload = multer_1.default({
     storage: multer_1.default.diskStorage({
@@ -52,7 +52,7 @@ exports.upload = multer_1.default({
         filename: (_req, file, cb) => cb(null, `${file.originalname}`),
     }),
 });
-const clientHost = 'https://vigilant-torvalds-39724e.netlify.app';
+const clientHost = "https://vigilant-torvalds-39724e.netlify.app";
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     try {
@@ -65,8 +65,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error(error);
     }
     mongoose_1.default.set(`debug`, true);
-    let accessLogStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, 'access.log'), { flags: 'a' });
-    app.use(morgan_1.default('dev', { stream: accessLogStream }));
+    let accessLogStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, "access.log"), { flags: "a" });
+    app.use(morgan_1.default("dev", { stream: accessLogStream }));
     console.log(__dirname);
     app.use(express_1.default.json({ limit: `50mb` }));
     app.use(express_1.default.urlencoded({ limit: `50mb` }));
@@ -74,9 +74,9 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         origin: clientHost,
         credentials: true,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        allowedHeaders: ['Content-Type', 'Authorization', 'Bearer'],
+        allowedHeaders: ["Content-Type", "Authorization", "Bearer"],
     }));
-    app.use('/api/quiz/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
+    app.use("/api/quiz/static", express_1.default.static(path_1.default.join(__dirname, "public")));
     console.log(express_1.default.static(path_1.default.join(__dirname, `public`)));
     app.post(`${exports.host_url}users/create`, UserController.createUser);
     app.post(`${exports.host_url}users/log_in`, UserController.login);
@@ -87,7 +87,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get(`${exports.host_url}tests/allTests`, TestController.getAllTests);
     app.get(`${exports.host_url}tests/deleteTestByID`, TestController.deleteTestByID);
     app.post(`${exports.host_url}tests/testimg`, exports.upload.single(`image`), TestController.testFile);
-    app.get(`${exports.host_url}`, ((_, res) => res.send("Hello, there")));
+    app.get(`${exports.host_url}`, (_, res) => res.send("Hello, there"));
     app.post(`${exports.host_url}tests/email`, EmailController.saveEmail);
     app.use(function (_, res, __) {
         res.status(404).send("Sorry can't find that!");
