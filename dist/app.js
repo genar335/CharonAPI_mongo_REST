@@ -87,7 +87,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get(`${exports.host_url}tests/allTests`, TestController.getAllTests);
     app.get(`${exports.host_url}tests/deleteTestByID`, TestController.deleteTestByID);
     app.post(`${exports.host_url}tests/testimg`, exports.upload.single(`image`), TestController.testFile);
-    app.get(`${exports.host_url}`, (_, res) => res.send("Hello, there"));
+    app.get(`${exports.host_url}`, (_, res) => res.send("Hello, there stranger"));
     app.post(`${exports.host_url}tests/email`, EmailController.saveEmail);
     app.use(function (_, res, __) {
         res.status(404).send("Sorry can't find that!");

@@ -137,7 +137,7 @@ const main = async () => {
 
   // app.get(`${host_url}`, TestController.getAllTests /* (_, res) => res.send('Hello there!') */)
   app.get(`${host_url}`, (_: express.Request, res: express.Response) =>
-    res.send("Hello, there")
+    res.send("Hello, there stranger")
   );
 
   app.post(`${host_url}tests/email`, EmailController.saveEmail);
