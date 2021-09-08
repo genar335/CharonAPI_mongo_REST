@@ -173,7 +173,7 @@ function dataURICoversion(qORa, whatToChange, index, pageIndex) {
     fs_1.default.writeFileSync(`dist/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`, buffer);
     qORa[whatToChange] = `http://localhost:${app_1.PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
 }
-exports.HOST = `modesmuzejs.lv/api/quiz`;
+exports.HOST = "68.183.213.125/api/quiz";
 const testFile = (req, res, _) => {
     console.log(req.body);
     console.log(req.file);
