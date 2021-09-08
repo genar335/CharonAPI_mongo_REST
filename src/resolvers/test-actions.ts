@@ -74,7 +74,7 @@ export const getTestsByActiveParam = async (req: Request, res: Response) => {
   if (req.query.active) {
     Test.find(
       {
-        active: (req.query.active as unknown) as boolean,
+        active: req.query.active as unknown as boolean,
       },
       (err: any, result: ITest[]) => {
         if (err) {
@@ -200,15 +200,15 @@ function dataURICoversion(
   ] = `http://localhost:${PORT}/uploads/img_question_pair-${index}_page-${pageIndex}.${ext}`;
 }
 
-export const HOST: string = `modesmuzejs.lv/api/quiz`
+// export const HOST: string = `modesmuzejs.lv/api/quiz`
+export const HOST = "68.183.213.125/api/quiz";
 
 export const testFile = (req: Request, res: Response, _: any) => {
-
   console.log(req.body);
-  console.log(req.file)
+  console.log(req.file);
 
   // console.log(req.file);
   // res.send(req.file)
   res.send(`http://${HOST}/static/uploads/${req.file.originalname}`);
-  res.send("hello")
+  res.send("hello");
 };
