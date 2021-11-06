@@ -20,7 +20,7 @@ const saveEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const newEmail = yield email_1.default.create({
             email: req.body.email,
             createdAt: new Date(),
-            updatedAt: new Date()
+            updatedAt: new Date(),
         });
         console.log(email);
         console.log(newEmail);
@@ -31,9 +31,9 @@ const saveEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.saveEmail = saveEmail;
-const getAllEmails = (_, res) => {
-    const emails = email_1.default.find();
+const getAllEmails = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const emails = yield email_1.default.find();
     res.send(emails);
-};
+});
 exports.getAllEmails = getAllEmails;
 //# sourceMappingURL=email-actions.js.map

@@ -141,6 +141,7 @@ const main = async () => {
   );
 
   app.post(`${host_url}tests/email`, EmailController.saveEmail);
+  app.get(`${host_url}tests/allEmails`, EmailController.getAllEmails);
 
   app.use(function (_, res, __) {
     res.status(404).send("Sorry can't find that!");
