@@ -76,7 +76,7 @@ const main = async () => {
   app.use(express.urlencoded({ limit: `50mb` }));
   app.use(
     cors({
-      origin: clientHost,
+      origin: [clientHost, "http://localhost:3000"],
       credentials: true,
       // origin: '*'
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
